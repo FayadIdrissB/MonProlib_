@@ -1,0 +1,99 @@
+
+
+.body_container
+{
+    display: flex;
+    margin-top: 50px;
+    height: 400px;
+    width: 100%;
+}
+
+.body_container_text
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 400px;
+    width: 50%;
+}
+
+.body_container_div
+{
+    margin-top: -20px;
+    height: 400px;
+    width: 60%;
+}
+
+.body_container_image
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 50%;
+    border-bottom: 2px solid white;
+}
+
+.body_container_text_title
+{
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+
+    padding: 20px;
+    line-height: 1.2;
+    font-family: Arial, sans-serif;
+}
+
+.logo
+{
+    width: 25%;
+}
+
+.body_container_text_paragraphe
+{
+    color: white;
+}
+
+.mecanicien_img
+{
+    height: 85%;
+    width: 85%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.body_container_search
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+    background-color:  #3778C4;
+    border-radius: 20px;
+    border: white 1px solid;
+    margin-top: 20px;
+}
+
+.body_container_search_text
+{
+    margin-left: 15px;
+    color: white;
+}
+
+.text-icone
+{
+    color: white;
+    width: 60px;
+}
+
+
+.carousel_img
+{
+    height: 85%;
+    width: 85%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
