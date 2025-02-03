@@ -1,10 +1,13 @@
 import './home.css';
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
 
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Header from '../../Component/Header/header';
+import Footer from '../../Component/Footer/footer';
 
 
 import logo from '../../image/logoP.png'
@@ -20,6 +23,14 @@ const images = [image1, image2, image3];
 
 function Home() {
 
+    // Utilisation de la navigation.
+    const navigate = useNavigate();
+
+    // direction vers la page HomePlus 
+    // eslint-disable-next-line no-unused-vars
+    const handleNavigate = () => {
+    navigate('/');}
+
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
@@ -31,6 +42,7 @@ function Home() {
 
   return (
     <div>
+        <Header />
         <div className='body_container'>
             <div className='body_container_text'>
                 <div className='body_container_div'>
@@ -61,6 +73,7 @@ function Home() {
                 />
             </div>
         </div>
+        <Footer />
     </div>
   );
 }
