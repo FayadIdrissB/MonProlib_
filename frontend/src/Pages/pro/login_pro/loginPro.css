@@ -10,6 +10,26 @@
     align-items: center;
 }
 
+.badgePro
+{
+    position: absolute;
+    top: 15%;
+    right: 85%;
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: rgb(77, 75, 75);;
+    border-radius: 10px;
+}
+
+.badge_pro_text
+{
+    font-family: Arial, sans-serif;
+}
+
 .container_login
 {
     display: flex;
@@ -18,7 +38,7 @@
     width: 50%;
     height: 200px;
     margin-top: 200px;
-    background-color: white;
+    background-color: rgb(77, 75, 75);;
     border-radius: 20px;
     z-index: 5;
 }
@@ -29,10 +49,10 @@
     justify-content: center;
     align-items: center;
     margin-top: -80px;
-    margin-left: -50px;
+    margin-left: -80px;
     height: 50px;
     width: 100px;
-    background-color: white;
+    background-color: rgb(77, 75, 75);;
     border-radius: 10px;
 }
 
@@ -40,7 +60,7 @@
 {
     margin-top: 0.5px;
     font-family: Arial, sans-serif;
-    color: #3778C4;
+    color: white;
 }
 
 

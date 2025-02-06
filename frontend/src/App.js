@@ -8,6 +8,8 @@ import RegisterU from './Pages/utilisateur/register_utilisateur/registerU'
 import HomePro from './Pages/pro/home_pro/homePro.jsx';
 import LoginPro from './Pages/pro/login_pro/loginPro.jsx'
 import LoginUtilisateur from './Pages/utilisateur/login_utilisateur/loginUtilisateur.jsx';
+import WelcomePro from './Pages/pro/welcome_pro/welcomePro.jsx';
+import WelcomeUser from './Pages/utilisateur/welcome_user/welcomeUser.jsx';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/homePro" element={<HomePro />} />
         <Route path="/Login_pro" element={<LoginPro />} />
         <Route path="/Login_utilisateur" element={<LoginUtilisateur />} />
+        <Route path="/welcomePro" element={<WelcomePro />} />
+        <Route path="/welcomeUser" element={<WelcomeUser />} />
     </Routes>
   </Router>
   );

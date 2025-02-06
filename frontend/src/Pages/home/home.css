@@ -5,6 +5,18 @@ body
   background-color: #3778C4;
 }
 
+h1
+{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+p
+{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
 
 .body_container
 {
@@ -57,7 +69,7 @@ body
 
 .body_container_text_paragraphe
 {
-    color: white;
+   color: white;
 }
 
 .mecanicien_img
@@ -75,7 +87,7 @@ body
     justify-content: space-between;
     height: 50px;
     width: 100%;
-    background-color:  #3778C4;
+    background-color: blue;
     border-radius: 20px;
     border: white 1px solid;
     margin-top: 20px;
@@ -84,12 +96,12 @@ body
 .body_container_search_text
 {
     margin-left: 15px;
-    color: white;
+    color: black;
 }
 
 .text-icone
 {
-    color: white;
+    color: black;
     width: 60px;
 }
 

@@ -11,6 +11,7 @@ function LoginUtilisateur() {
   return (
     <div className='login'>
       <Header />
+      <div className='badgePro'> <p className='badge_pro_text'>Utilisateur</p> </div>
       <div className='container_login'>
         <div className='container_login_div'>
           <div className='container_login_fiche' onClick={() => navigate('/Login_pro')}>  <p className='container_login_fiche_text'> Pro </p>   </div>
