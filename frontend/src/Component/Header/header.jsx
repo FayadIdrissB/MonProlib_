@@ -1,17 +1,24 @@
 import './header.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import logoP from '../../image/logoP.png';
+
+
+import logo from '../../image/logoP.png';
+
 
 function Header() {
+
     const navigate = useNavigate();
+
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null); // Référence pour détecter les clics en dehors
+
 
     // Fonction pour basculer l'affichage du menu
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
     };
+
 
     // Fonction pour fermer le menu si on clique en dehors
     const handleClickOutside = (event) => {
@@ -19,6 +26,7 @@ function Header() {
             setShowDropdown(false);
         }
     };
+
 
     // Ajout d'un écouteur d'événement pour détecter les clics en dehors
     useEffect(() => {
@@ -33,11 +41,12 @@ function Header() {
         };
     }, [showDropdown]);
 
+
     return (
         <div className="header">
             <div className="header_container">
-                <div className='header_container_button-1'>
-                    <img src={logoP} alt="" onClick={() => navigate('/')} className='logo-p'/>  
+                <div className='header_container_button-logo'>
+                    <img src={logo} alt="" onClick={() => navigate('/')} className='logo_header'/>  
                 </div>
                 <div className='header_container_button'>
                     <div className='header_container_button_paragraphe'>About Us</div>
@@ -47,12 +56,13 @@ function Header() {
                     <div className='header_container_button_started' onClick={toggleDropdown} ref={dropdownRef}>
                         Get Started
                         {showDropdown && (
-                            <div className="dropdown_menu">
-                                <div className="dropdown_item" onClick={() => navigate('/register_utilisateur')}>Compte Utilisateur</div>
-                                <div className="dropdown_item" onClick={() => navigate('/register_pro')}>Compte Pro</div>
+                            <div className="menu">
+                                <div className="menu_item" onClick={() => navigate('/register_utilisateur')}>Compte Utilisateur</div>
+                                <div className="menu_item" onClick={() => navigate('/register_pro')}>Compte Pro</div>
                             </div>
                         )}
                     </div>
+
                 </div>
             </div>
         </div>

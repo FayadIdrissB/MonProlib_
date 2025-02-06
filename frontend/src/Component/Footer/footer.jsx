@@ -7,29 +7,29 @@ import { faFacebook, faInstagram, faXTwitter, faYoutube } from "@fortawesome/fre
 
 function Footer() {
     return (
-       <div className='footer_container'>
-            <div className='footer_container_list'>
-                <div className='footer_list'>
-                    <div className='footer_container_list_p'>
-                        <p className='footer_container_list_h'>Notre entreprise</p>
+       <div className='footer'>
+            <div className='footer_container'>
+                <div className='footer_container_list'>
+                    <div className='footer_container_list_block'>
+                        <p className='footer_container_list_title'>Notre entreprise</p>
                         <p className='list'> À propos de nous </p>
                         <p className='list'> Carrières </p>
                         <p className='list'> Besoin d'aide ? </p>
                     </div>
-                    <div className='footer_container_list_p'>
-                        <p className='footer_container_list_h'>Trouvez votre spécialiste</p>
+                    <div className='footer_container_list_block'>
+                        <p className='footer_container_list_title'>Trouvez votre spécialiste</p>
                         <p className='list'> À propos de nous </p>
                         <p className='list'> Carrières </p>
                         <p className='list'> Besoin d'aide ? </p>
                     </div>
-                    <div className='footer_container_list_p'>
-                        <p className='footer_container_list_h'>Recherches fréquentes</p>
+                    <div className='footer_container_list_block'>
+                        <p className='footer_container_list_title'>Recherches fréquentes</p>
                         <p className='list'> À propos de nous </p>
                         <p className='list'> Carrières </p>
                         <p className='list'> Besoin d'aide ? </p>
                     </div>
-                    <div className='footer_container_list_p'>
-                        <p className='footer_container_list_h'>Nos réseaux sociaux</p>
+                    <div className='footer_container_list_block'>
+                        <p className='footer_container_list_title'>Nos réseaux sociaux</p>
                         <div className='list_icon' style={{ display: "flex", gap: "10px", fontSize: "24px" }}>
                             <FontAwesomeIcon icon={faFacebook} style={{ color: "#1877F2" }} />
                             <FontAwesomeIcon icon={faInstagram} style={{ color: "#E4405F" }} />

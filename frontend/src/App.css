@@ -3,4 +3,24 @@
   height: 100%;
   width: 100%;
   background-color: #3778C4;
+  font-family: 'Roboto', sans-serif;
+}
+
+body
+{
+  width: 100%;
+  background-color: #3778C4;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1
+{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+p
+{
+    color: white;
+    font-family: 'Poppins', sans-serif;
 }
