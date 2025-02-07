@@ -1,11 +1,11 @@
 import './homePro.css';
-import HeaderPro from '../../../Component/headerPro/headerPro';
+import HeaderConnexion from '../../../Component/header_connexion/headerConnexion';
 
 
 function HomePro() {
   return (
     <div>
-        <HeaderPro />
+        <HeaderConnexion />
     </div>
   );
 }

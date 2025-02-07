@@ -1,5 +1,7 @@
 import './welcomeUser.css';
-import HeaderPro from '../../../Component/headerPro/headerPro';
+
+
+import HeaderPro from '../../../Component/header_connexion/headerConnexion';
 
 
 function WelcomeUser() {

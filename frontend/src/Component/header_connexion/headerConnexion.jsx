@@ -1,11 +1,12 @@
-import './headerPro.css';
+import './headerConnexion.css';
 import React, { useState, useEffect, useRef } from 'react';
-
 import { useNavigate } from 'react-router-dom';
-import logoP from '../../image/logoP.png';
 
-function HeaderPro() {
 
+import Logo from '../../Image/logoP.png';
+
+
+function HeaderConnexion() {
 
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
@@ -33,9 +34,9 @@ function HeaderPro() {
     <div>
         <div className="header">
             <div className="header_container">
-                <div className='header_container_pro'>
-                    <img src={logoP} alt="" onClick={() => navigate('/')} className='logo-pro'/>  
-                    <div className='header_container_button_pro' onClick={toggleMenu}>
+                <div className='header_container_connexion'>
+                    <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header'/>  
+                    <div className='header_container_button_connexion' onClick={toggleMenu}>
                         Bonjour, Fayad
                     </div>
                 </div>
@@ -49,11 +50,11 @@ function HeaderPro() {
                     <div className="dropdown_item">Définir Mes Heures</div>
                     <div className="dropdown_item">Mes Rendez-Vous</div>
                     <div className="dropdown_item">Paramètre</div>
-                    <div className="dropdown_item">Déconnexion</div>
+                    <div className="dropdown_item_deconnexion">Déconnexion</div>
                 </div>
             )}
     </div>
   );
 }
 
-export default HeaderPro;
+export default HeaderConnexion;

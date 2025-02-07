@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
 
-import logo from '../../image/logoP.png';
+import Logo from '../../Image/logoP.png';
 
 
 function Header() {
@@ -46,7 +46,7 @@ function Header() {
         <div className="header">
             <div className="header_container">
                 <div className='header_container_button-logo'>
-                    <img src={logo} alt="" onClick={() => navigate('/')} className='logo_header'/>  
+                    <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header'/>  
                 </div>
                 <div className='header_container_button'>
                     <div className='header_container_button_paragraphe'>About Us</div>
@@ -57,12 +57,11 @@ function Header() {
                         Get Started
                         {showDropdown && (
                             <div className="menu">
-                                <div className="menu_item" onClick={() => navigate('/register_utilisateur')}>Compte Utilisateur</div>
+                                <div className="menu_item" onClick={() => navigate('/register_user')}>Compte Utilisateur</div>
                                 <div className="menu_item" onClick={() => navigate('/register_pro')}>Compte Pro</div>
                             </div>
                         )}
                     </div>
-
                 </div>
             </div>
         </div>

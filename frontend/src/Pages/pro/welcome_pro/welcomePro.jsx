@@ -1,5 +1,5 @@
 import './welcomePro.css';
-import HeaderPro from '../../../Component/headerPro/headerPro';
+import HeaderPro from '../../../Component/header_connexion/headerConnexion';
 
 
 function WelcomePro() {
@@ -23,7 +23,7 @@ function WelcomePro() {
               <input className='form_input' title="Cliquez ici pour vous inscrire" placeholder='Adresse' /> 
               <input className='form_input' title="Cliquez ici pour vous inscrire" placeholder='Numéro de téléphone' /> 
               <input className='form_input' title="Cliquez ici pour vous inscrire" placeholder='Numéro de siret' /> 
-              <input className='input_form_send_p' title="s'inscrire" type="submit" /> 
+              <input className='input_form_send' title="s'inscrire" type="submit" /> 
             </div>
           </div>
         </div>

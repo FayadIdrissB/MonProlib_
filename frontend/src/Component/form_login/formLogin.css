@@ -1,0 +1,90 @@
+
+
+.badgePro
+{
+    position: absolute;
+    top: 18%;
+    right: 85%;
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #2440A9;
+    border-radius: 10px;
+}
+
+
+.badge_pro_text
+{
+    font-family: Arial, sans-serif;
+}
+
+
+.container_login_title
+{
+    color: white;
+    position: relative;
+    left: -17%;
+    top: 27%;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.container_login
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 250px;
+    margin-top: 200px;
+    background-color: white;
+    border-radius: 20px;
+    z-index: 5;
+}
+
+
+.container_login_form
+{
+    height: 100px;
+    width: 70%;
+}
+
+
+.container_login_fiche_text
+{
+    margin-top: 0.5px;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+
+.container_login_form_input
+{
+    background-color: #eaf1ff; /* Bleu clair similaire */
+    border: 1px solid #d0d7e3; /* Bordure douce */
+    border-radius: 6px; /* Coins arrondis */
+    padding: 10px 30px; /* Espacement intérieur */
+    font-size: 16px; /* Taille de police */
+    color: #333; /* Couleur du texte */
+    margin-top: 10px;
+    width: 80%;
+    height: 20px;
+}
+
+.container_form_send
+{
+    background-color: #3778C4; /* Vert foncé */
+    color: white; /* Texte en blanc */
+    border: none;
+    border-radius: 6px; /* Coins arrondis */
+    padding: 10px 16px; /* Espacement intérieur */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    top: 25%;
+    left: 100%;
+}

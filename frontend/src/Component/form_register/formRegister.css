@@ -1,5 +1,6 @@
 
 
+
 .subscribe
 {
     display: flex;
@@ -9,7 +10,8 @@
     margin-top: 130px;
 }
 
-.subscribe_title_p
+
+.subscribe_title
 {
     color: white;
     position: relative;
@@ -18,26 +20,28 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
 .subscribe_container
 {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 50%;
-    height: 400px;
-    background-color: rgb(77, 75, 75);
+    height: 600px;
+    background-color: white;
     border-radius: 20px;
 }
 
 
 .subscribe_container_form
 {
-    height: 650px;
+    height: 750px;
     width: 100%;
     margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }
 
 
@@ -52,7 +56,8 @@
     width: 30%;
 }
 
-.input_form_send_p {
+.input_form_send 
+{
     background-color: #3778C4; /* Vert foncé */
     color: white; /* Texte en blanc */
     border: none;
