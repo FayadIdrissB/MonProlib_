@@ -11,7 +11,7 @@ function FormLogin({ onClickPath, titleConnexion }) {
   {
     const data = await window.fetch('/api/youtube')
     const json = await data.json()
-    const msg = json.msg
+    console.log(json)
   }
 
 
@@ -23,6 +23,7 @@ function FormLogin({ onClickPath, titleConnexion }) {
               <input className='container_login_form_input' title="Cliquez ici pour vous inscrire" placeholder='Email' /> 
               <input className='container_login_form_input' title="Cliquez ici pour vous inscrire" placeholder='Mot de passe' /> 
               <input className='container_form_send' title="Cliquez ici pour vous inscrire" type="submit" onClick={handleClick} /> 
+              <p>{msg}</p>
           </div>
       </div>
     </div>

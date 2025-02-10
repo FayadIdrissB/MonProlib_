@@ -20,7 +20,7 @@
     "web-vitals": "^4.2.4"
   },
   "scripts": {
-    "proxy": "http://localhost:3001",
+    "proxy": "http://localhost:5002",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -46,7 +46,7 @@ function Header() {
         <div className="header">
             <div className="header_container">
                 <div className='header_container_button-logo'>
-                    <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header'/>  
+                    <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header_'/>  
                 </div>
                 <div className='header_container_button'>
                     <div className='header_container_button_paragraphe'>About Us</div>

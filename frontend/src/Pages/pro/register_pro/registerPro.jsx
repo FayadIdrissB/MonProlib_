@@ -6,7 +6,7 @@ import FormRegister from '../../../Component/form_register/formRegister';
 
 function RegisterPro() {
     return (
-      <div>
+      <div className='resgister_page'>
         <Header />
         <FormRegister title="Inscription Pro"/>
       </div>

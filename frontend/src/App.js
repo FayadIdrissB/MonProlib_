@@ -18,11 +18,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register_pro" element={<RegisterPro />} />
         <Route path="/register_user" element={<RegisterUser />} />
-        <Route path="/homePro" element={<HomePro />} />
+        <Route path="/home_pro" element={<HomePro />} />
         <Route path="/Login_pro" element={<LoginPro />} />
         <Route path="/Login_user" element={<LoginUser />} />
-        <Route path="/welcomePro" element={<WelcomePro />} />
-        <Route path="/welcomeUser" element={<WelcomeUser />} />
+        <Route path="/welcome_pro" element={<WelcomePro />} />
+        <Route path="/welcome_user" element={<WelcomeUser />} />
     </Routes>
   </Router>
   );
