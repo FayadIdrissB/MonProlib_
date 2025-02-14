@@ -1,33 +1,78 @@
-import './formLogin.css';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './formLogin.css';
 
-function FormLogin({ onClickPath, titleConnexion }) {
+function FormLogin() {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [msg, setMsg] = useState({ text: '', type: '' });
 
-  const navigate = useNavigate();
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-  const [ msg, setMsg ] = useState('')
-  const handleClick = async () => 
-  {
-    const data = await window.fetch('/api/youtube')
-    const json = await data.json()
-    console.log(json)
-  }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
 
+            const data = await response.json();
 
-  return (
-    <div className='login'>
-      <h2 className='container_login_title' onClick={() => navigate(onClickPath)}>{titleConnexion}</h2>
-      <div className='container_login'>
-          <div className='container_login_form'>
-              <input className='container_login_form_input' title="Cliquez ici pour vous inscrire" placeholder='Email' /> 
-              <input className='container_login_form_input' title="Cliquez ici pour vous inscrire" placeholder='Mot de passe' /> 
-              <input className='container_form_send' title="Cliquez ici pour vous inscrire" type="submit" onClick={handleClick} /> 
-              <p>{msg}</p>
-          </div>
-      </div>
-    </div>
+            if (response.ok) {
+                setMsg({ text: '✅ Connexion réussie ! Redirection en cours...', type: 'success' });
+
+                // Stocke le token et le rôle
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role);
+
+                // Redirection selon le rôle
+                setTimeout(() => {
+                    if (data.role === 'pro') {
+                        navigate('/welcome_pro'); // Redirection pour les professionnels
+                    } else {
+                        navigate('/welcome_user'); // Redirection pour les utilisateurs classiques
+                    }
+                }, 1500);
+            } else {
+                setMsg({ text: data.error || '❌ Email ou mot de passe incorrect', type: 'error' });
+            }
+        } catch (error) {
+            setMsg({ text: '❌ Erreur serveur, veuillez réessayer plus tard.', type: 'error' });
+        }
+    };
+
+    return (
+        <div className='login'>
+            <h2 className='container_login_title'>
+                Connexion
+            </h2>
+            <form className='container_login' onSubmit={handleSubmit}>
+                <div className='container_login_form'>
+                    <input
+                        className='container_login_form_input'
+                        name="email"
+                        placeholder='Email'
+                        onChange={handleChange}
+                    />
+                    <input
+                        className='container_login_form_input'
+                        name="password"
+                        type="password"
+                        placeholder='Mot de passe'
+                        onChange={handleChange}
+                    />
+                    <button className='container_form_send' type="submit">
+                        Se connecter
+                    </button>
+                    {msg.text && <p className={`message ${msg.type}`}>{msg.text}</p>}
+                </div>
+            </form>
+        </div>
     );
-  }
-  
-  export default FormLogin;
+}
+
+export default FormLogin;

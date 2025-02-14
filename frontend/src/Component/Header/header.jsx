@@ -50,7 +50,7 @@ function Header() {
                 </div>
                 <div className='header_container_button'>
                     <div className='header_container_button_paragraphe'>About Us</div>
-                    <div className='header_container_button_paragraphe' onClick={() => navigate('/Login_pro')}>Log In</div>
+                    <div className='header_container_button_paragraphe' onClick={() => navigate('/Login')}>Log In</div>
                     
                     {/* Bouton "Get Started" avec gestion du menu au clic */}
                     <div className='header_container_button_started' onClick={toggleDropdown} ref={dropdownRef}>

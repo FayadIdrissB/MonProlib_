@@ -8,7 +8,7 @@ function RegisterPro() {
     return (
       <div className='resgister_page'>
         <Header />
-        <FormRegister title="Inscription Pro"/>
+        <FormRegister title="Inscription Pro" isPro={true}/>
       </div>
     );
   }

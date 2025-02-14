@@ -8,7 +8,7 @@ function RegisterUser() {
     return (
       <div>
         <Header />
-        <FormRegister title="Inscription Utilisateur"/>
+        <FormRegister title="Inscription Utilisateur" isPro={false}/>
       </div>
     );
   }
