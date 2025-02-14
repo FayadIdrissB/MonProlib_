@@ -2,22 +2,25 @@ import './headerConnexion.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 import Logo from '../../Image/logoP.png';
 
-
 function HeaderConnexion() {
-
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
+    const [prenom, setPrenom] = useState('');
 
-    // Fonction pour basculer l'affichage du menu
+    useEffect(() => {
+        const storedPrenom = localStorage.getItem('prenom');
+        if (storedPrenom) {
+            setPrenom(storedPrenom);
+        }
+    }, []);
+
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
-    // Fermer le menu en cliquant à l'extérieur
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -30,20 +33,20 @@ function HeaderConnexion() {
         };
     }, []);
 
-  return (
-    <div>
-        <div className="header">
-            <div className="header_container">
-                <div className='header_container_connexion'>
-                    <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header'/>  
-                    <div className='header_container_button_connexion' onClick={toggleMenu}>
-                        Bonjour, Fayad
+    return (
+        <div>
+            <div className="header">
+                <div className="header_container">
+                    <div className='header_container_connexion'>
+                        <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header' />
+                        <div className='header_container_button_connexion' onClick={toggleMenu}>
+                            Bonjour, {prenom || 'Utilisateur'}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        {menuOpen && (
+            {menuOpen && (
                 <div className="dropdown_menu" ref={menuRef}>
                     <div className="dropdown_item">Mon Espace Pro</div>
                     <div className="dropdown_item">Déposer Mon annonce</div>
@@ -53,8 +56,8 @@ function HeaderConnexion() {
                     <div className="dropdown_item_deconnexion">Déconnexion</div>
                 </div>
             )}
-    </div>
-  );
+        </div>
+    );
 }
 
 export default HeaderConnexion;

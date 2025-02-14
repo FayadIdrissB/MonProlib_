@@ -25,16 +25,18 @@ function FormLogin() {
             if (response.ok) {
                 setMsg({ text: '✅ Connexion réussie ! Redirection en cours...', type: 'success' });
 
-                // Stocke le token et le rôle
+                // Stocker les informations de l'utilisateur dans le localStorage
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('role', data.role);
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('prenom', data.prenom); // ✅ Ajout du prénom
 
-                // Redirection selon le rôle
+                // Redirection vers la page de compte avec l'ID
                 setTimeout(() => {
                     if (data.role === 'pro') {
-                        navigate('/welcome_pro'); // Redirection pour les professionnels
+                        navigate(`/welcome_pro/${data.userId}`);
                     } else {
-                        navigate('/welcome_user'); // Redirection pour les utilisateurs classiques
+                        navigate(`/welcome_user/${data.userId}`);
                     }
                 }, 1500);
             } else {

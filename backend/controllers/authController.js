@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
     try {
-        const { email, password, siret } = req.body;
+        const { nom, prenom, email, password, siret } = req.body; // ✅ Ajouter nom et prenom
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -14,11 +14,13 @@ exports.register = async (req, res) => {
         // Déterminer le rôle en fonction de la présence du SIRET
         const role = siret ? 'pro' : 'user';
 
-        const user = new User({ email, password, role, siret: siret || null });
+        // ✅ Ajouter nom et prenom lors de la création de l'utilisateur
+        const user = new User({ nom, prenom, email, password, role, siret: siret || null });
         await user.save();
 
         res.status(201).json({ message: `Compte ${role} créé avec succès`, role });
     } catch (error) {
+        console.error(error); // ✅ Ajoute un log pour voir les erreurs dans la console
         res.status(500).json({ error: 'Erreur serveur' });
     }
 };
@@ -37,10 +39,15 @@ exports.login = async (req, res) => {
             return res.status(400).json({ error: 'Email ou mot de passe incorrect' });
         }
 
-        // Générer un token avec le rôle inclus
         const token = jwt.sign({ userId: user._id, role: user.role }, 'SECRET_KEY', { expiresIn: '1h' });
 
-        res.json({ message: 'Connexion réussie', token, role: user.role });
+        res.json({ 
+            message: 'Connexion réussie', 
+            token, 
+            role: user.role, 
+            userId: user._id, 
+            prenom: user.prenom  // ✅ Ajout du prénom
+        });
     } catch (error) {
         res.status(500).json({ error: 'Erreur serveur' });
     }

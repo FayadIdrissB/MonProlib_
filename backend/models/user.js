@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
+    nom: { type: String, required: true }, // Ajout du nom
+    prenom: { type: String, required: true }, // Prénom déjà présent
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ['user', 'pro'], required: true }, // Ajout du rôle
-    siret: { type: String, required: function () { return this.role === 'pro'; } } // SIRET obligatoire pour les pros
+    role: { type: String, enum: ['user', 'pro'], required: true },
+    siret: { type: String, required: function () { return this.role === 'pro'; } }
 });
 
 // Hashage du mot de passe avant l'enregistrement

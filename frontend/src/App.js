@@ -19,10 +19,10 @@ function App() {
         <Route path="/register_user" element={<RegisterUser />} />
         <Route path="/home_pro" element={<HomePro />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/welcome_pro" element={<WelcomePro />} />
-        <Route path="/welcome_user" element={<WelcomeUser />} />
-    </Routes>
-  </Router>
+        <Route path="/welcome_pro/:id" element={<WelcomePro />} />
+        <Route path="/welcome_user/:id" element={<WelcomeUser />} />
+      </Routes>
+    </Router>
   );
 }
 
