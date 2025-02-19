@@ -52,3 +52,18 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Erreur serveur' });
     }
 };
+
+exports.getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password'); // On enlève le password pour la sécurité
+
+        if (!user) {
+            return res.status(404).json({ error: 'Utilisateur non trouvé' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'utilisateur :', error);
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+};
