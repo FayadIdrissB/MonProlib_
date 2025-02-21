@@ -3,15 +3,17 @@
 .header_container_connexion
 {
     display: flex;
-    justify-content: space-between;
+    width: 100%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .logo_header
 {
     margin-top: -25px;
     margin-left: 20px;
-    width: 8%;
+    width: 150px;
+    height: 100px;
     object-fit: cover;
 }
 
@@ -22,13 +24,14 @@
     align-items: center;
     font-weight: 600;
     height: 40px;
-    width: 12%;
+    width: 170px;
     color: rgb(77, 75, 75);;
     background-color: white;
     border-radius: 20px;
     margin-top: -10px;
     margin-right: 3%;
     font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
 
 
@@ -45,10 +48,10 @@
 }
 
 .dropdown_menu {
-    position: absolute;
+    position: fixed;
     margin-top: 30px;
     top: 60px;
-    right: 3%;
+    right: 0.5%;
     background: #1A41AF;
     color: white;
     padding: 10px;

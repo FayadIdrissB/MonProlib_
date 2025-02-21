@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './welcomeUser.css';
 
 import HeaderPro from '../../../Component/header_connexion/headerConnexion';
-import SearchBar from '../../../Component/SearchBar/SearchBar';
+import SearchBar from '../../../Component/SearchBar/searchBar';
 
 function WelcomeUser() {
   const { id } = useParams(); 
@@ -11,10 +11,10 @@ function WelcomeUser() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [results, setResults] = useState([]);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   useEffect(() => {
-    console.log("ID récupéré depuis l'URL :", id); // Vérifier si l'ID est bien récupéré
-
     if (!id) {
       setError("ID utilisateur manquant dans l'URL");
       setLoading(false);
@@ -25,8 +25,6 @@ function WelcomeUser() {
       try {
         setLoading(true);
         const response = await fetch(`http://localhost:3000/api/auth/users/${id}`);
-
-        console.log("Réponse du serveur :", response); // Log pour voir si l'API répond
 
         if (!response.ok) {
           throw new Error('Utilisateur non trouvé');
@@ -45,6 +43,28 @@ function WelcomeUser() {
 
     fetchUserData();
   }, [id]);
+
+  const handleSearch = async (location) => {
+    console.log("🔍 Recherche lancée avec location :", location);
+    
+    try {
+      const response = await fetch(`http://localhost:3000/api/garages?location=${location}`);
+      
+      console.log("📡 Réponse reçue du serveur :", response);
+
+      if (!response.ok) {
+        throw new Error(`Erreur API : ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("📌 Données API reçues sur le frontend :", data);
+
+      setResults(data);
+      setSearchPerformed(true);
+    } catch (error) {
+      console.error("❌ Erreur lors de la récupération des garages :", error);
+    }
+};
 
   if (loading) {
     return (
@@ -76,7 +96,24 @@ function WelcomeUser() {
       <div className='container_user'>
         <h1>Bienvenue, {user?.prenom}</h1>
       </div>
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
+      {searchPerformed && results.length > 0 && (
+        <div className="welcome-container">
+          {results.map((place, index) => (
+            <div key={index} className="place-card">
+              <div className="place-header">
+                <img src="/default-avatar.png" alt="Avatar" className="place-avatar" />
+                <div className="place-info">
+                  <h3 className="place-name">{place.name}</h3>
+                  <p className="place-category">Garage / Réparation</p>
+                </div>
+              </div>
+              <p className="place-address">📍 {place.latitude}, {place.longitude}</p>
+              <button className="place-button">VOIR PLUS</button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

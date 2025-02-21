@@ -4,57 +4,48 @@ import './welcomePro.css';
 import HeaderPro from '../../../Component/header_connexion/headerConnexion';
 
 function WelcomePro() {
-  const { userId } = useParams();
+  const { id } = useParams();
   const [user, setUser] = useState(null);
 
+  console.log("🔍 ID utilisateur récupéré depuis l'URL :", id); // Debug ID
+
   useEffect(() => {
+    if (!id) {
+      console.error("❌ Aucun ID utilisateur reçu !");
+      return;
+    }
+
     const fetchUserData = async () => {
+      console.log("📡 Envoi de la requête pour récupérer l'utilisateur...");
+      
       try {
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+        const response = await fetch(`http://localhost:3000/api/users/${id}`);
+        console.log("📩 Réponse brute du serveur :", response); // Debug response object
+
         const data = await response.json();
+        console.log("📦 Données reçues de l'API :", data); // Debug API response
 
         if (response.ok) {
           setUser(data);
         } else {
-          console.error('Erreur :', data.error);
+          console.error("❌ Erreur API :", data.error || "Réponse non valide");
         }
       } catch (error) {
-        console.error('Erreur serveur:', error);
+        console.error("❌ Erreur serveur :", error);
       }
     };
 
     fetchUserData();
-  }, [userId]);
+  }, [id]);
 
   return (
     <div>
       <HeaderPro />
-      <div className='container_pro'>
-        <div className='container_pro_text'>
-          <div className='container_pro_text_paragraphe'>
-            <h1>Bienvenue, {user ? user.email : 'Chargement...'}</h1>
-            <p>- Donner de la visibilité à votre activité</p>
-            <p>- Envoyer directement vos devis en ligne</p>
-            <p>- Faciliter les prises de rendez-vous</p>
-          </div>
-        </div>
-
-        <div className='container_pro_block'>
-          <div className='container_pro_block_info'>
-            {user ? (
-              <>
-                <h2>Informations du compte :</h2>
-                <p><strong>Nom :</strong> {user.nom || 'Non renseigné'}</p>
-                <p><strong>Prénom :</strong> {user.prenom || 'Non renseigné'}</p>
-                <p><strong>Email :</strong> {user.email}</p>
-                <p><strong>Numéro de SIRET :</strong> {user.siret || 'Non renseigné'}</p>
-              </>
-            ) : (
-              <p>Chargement des informations...</p>
-            )}
-          </div>
-        </div>
-      </div>
+      {user ? (
+        <h1>Bienvenue, {user.prenom} !</h1>
+      ) : (
+        <p>Chargement des informations...</p>
+      )}
     </div>
   );
 }

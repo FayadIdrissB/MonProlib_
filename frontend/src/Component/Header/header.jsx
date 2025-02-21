@@ -49,12 +49,12 @@ function Header() {
                     <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header_'/>  
                 </div>
                 <div className='header_container_button'>
-                    <div className='header_container_button_paragraphe'>About Us</div>
-                    <div className='header_container_button_paragraphe' onClick={() => navigate('/Login')}>Log In</div>
+                    <div className='header_container_button_paragraphe'>À propos</div>
+                    <div className='header_container_button_paragraphe' onClick={() => navigate('/Login')}>Connexion</div>
                     
                     {/* Bouton "Get Started" avec gestion du menu au clic */}
                     <div className='header_container_button_started' onClick={toggleDropdown} ref={dropdownRef}>
-                        Get Started
+                        Inscription
                         {showDropdown && (
                             <div className="menu">
                                 <div className="menu_item" onClick={() => navigate('/register_user')}>Compte Utilisateur</div>

@@ -38,7 +38,9 @@ function HeaderConnexion() {
             <div className="header">
                 <div className="header_container">
                     <div className='header_container_connexion'>
-                        <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header' />
+                        <div>
+                            <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header' />
+                        </div>
                         <div className='header_container_button_connexion' onClick={toggleMenu}>
                             Bonjour, {prenom || 'Utilisateur'}
                         </div>
@@ -53,7 +55,7 @@ function HeaderConnexion() {
                     <div className="dropdown_item">Définir Mes Heures</div>
                     <div className="dropdown_item">Mes Rendez-Vous</div>
                     <div className="dropdown_item">Paramètre</div>
-                    <div className="dropdown_item_deconnexion">Déconnexion</div>
+                    <div className="dropdown_item_deconnexion" onClick={() => navigate('/')}>Déconnexion</div>
                 </div>
             )}
         </div>

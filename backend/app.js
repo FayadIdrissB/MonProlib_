@@ -3,22 +3,15 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 
-// Chargement des variables d'environnement
-require('dotenv').config();
 
 // Importation des routes
 const authRoutes = require('./routes/authRoutes');
+const usersRoutes = require("./routes/usersRoutes");
 
-// Configuration CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
-}));
 
-// Middleware pour parser le JSON
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Chargement des variables d'environnement
+require('dotenv').config();
+
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -33,8 +26,22 @@ mongoose.connection.on('connected', () => {
   console.log('✅ Connexion MongoDB active');
 });
 
+
+app.use(cors({
+  origin: "http://localhost:3001", // Autorise uniquement ton frontend
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization"
+}));
+
+
+// Middleware pour parser le JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 // Routes
 app.use('/api/auth', authRoutes);
+app.use("/api/users", usersRoutes);
 
 // Gestion des routes non trouvées
 app.use((req, res) => {
