@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import "./searchBar.css";
 
-const SearchBar = ({ onSearch }) => {  // 👈 Ajoute `onSearch` en prop
+const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
 
   const handleSearchClick = () => {
     console.log("🚀 Bouton Rechercher cliqué !");
-    if (!location) {
-      console.error("❌ Aucune localisation fournie !");
+    
+    if (!query || !location) {
+      console.error("❌ Nom ou localisation manquant !");
       return;
     }
+    
     if (onSearch) {
-      onSearch(location);  // 👈 Appelle `onSearch` avec la location
+      onSearch(query, location);
     } else {
       console.error("⚠️ `onSearch` n'est pas défini !");
     }
