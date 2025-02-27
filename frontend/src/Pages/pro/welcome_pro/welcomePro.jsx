@@ -1,51 +1,71 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import './welcomePro.css';
+
+import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
 import HeaderPro from '../../../Component/header_connexion/headerConnexion';
+import Footer from '../../../Component/footer/footer';
+import Logo from '../../../Image/logoP.png';
+
+// Importation des images locales
+import image1 from "../../../Image/mecanicien.jpeg";
+import image2 from "../../../Image/artisan.jpg";
+import image3 from "../../../Image/laveur_auto.jpg";
+
+const images = [image1, image2, image3];
 
 function WelcomePro() {
-  const { id } = useParams();
-  const [user, setUser] = useState(null);
 
-  console.log("🔍 ID utilisateur récupéré depuis l'URL :", id); // Debug ID
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (!id) {
-      console.error("❌ Aucun ID utilisateur reçu !");
-      return;
-    }
-
-    const fetchUserData = async () => {
-      console.log("📡 Envoi de la requête pour récupérer l'utilisateur...");
-      
-      try {
-        const response = await fetch(`http://localhost:3000/api/users/${id}`);
-        console.log("📩 Réponse brute du serveur :", response); // Debug response object
-
-        const data = await response.json();
-        console.log("📦 Données reçues de l'API :", data); // Debug API response
-
-        if (response.ok) {
-          setUser(data);
-        } else {
-          console.error("❌ Erreur API :", data.error || "Réponse non valide");
-        }
-      } catch (error) {
-        console.error("❌ Erreur serveur :", error);
-      }
-    };
-
-    fetchUserData();
-  }, [id]);
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>
       <HeaderPro />
-      {user ? (
-        <h1>Bienvenue, {user.prenom} !</h1>
-      ) : (
-        <p>Chargement des informations...</p>
-      )}
+      
+      <div className='body_'>
+        <div className='body_container'>
+          <div className='body_container_text'>
+            <h2 className='body_container_text_title'>Tips For An Eco-Friendly
+              <br />
+              <img src={Logo} alt="" className='body_logo'/>  Lifestyle
+            </h2>
+            <p className='body_container_text_paragraphe'>
+              We believe that small changes to adopt sustainable practices can make a big impact.
+            </p>
+            <div className='body_container_text_search'>
+              <p className='body_container_text_search_paragraphe'>
+                Search here...
+              </p>
+              <div>
+                <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: 'white' }} className="text-icone" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='body_container_image'>
+          <motion.img
+            key={index}
+            src={images[index]}
+            alt={`Slide ${index + 1}`}
+            className="carousel_img"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.5 }}
+          />
+        </div>
+      </div>
+      
+      <Footer />
     </div>
   );
 }

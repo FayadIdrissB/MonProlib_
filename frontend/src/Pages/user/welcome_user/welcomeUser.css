@@ -1,0 +1,17 @@
+
+
+.container-card
+{
+    width: 100%;
+}
+
+
+.welcome-container
+{
+    width: 100%;
+    height: 400px;
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}

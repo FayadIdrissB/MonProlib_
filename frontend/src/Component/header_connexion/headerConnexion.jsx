@@ -1,7 +1,6 @@
 import './headerConnexion.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Logo from '../../Image/logoP.png';
 
 function HeaderConnexion() {
@@ -9,12 +8,14 @@ function HeaderConnexion() {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const [prenom, setPrenom] = useState('');
+    const [role, setRole] = useState('');
 
     useEffect(() => {
         const storedPrenom = localStorage.getItem('prenom');
-        if (storedPrenom) {
-            setPrenom(storedPrenom);
-        }
+        const storedRole = localStorage.getItem('role');
+        
+        if (storedPrenom) setPrenom(storedPrenom);
+        if (storedRole) setRole(storedRole);
     }, []);
 
     const toggleMenu = () => {
@@ -33,6 +34,11 @@ function HeaderConnexion() {
         };
     }, []);
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
     return (
         <div>
             <div className="header">
@@ -50,12 +56,16 @@ function HeaderConnexion() {
 
             {menuOpen && (
                 <div className="dropdown_menu" ref={menuRef}>
-                    <div className="dropdown_item">Mon Espace Pro</div>
-                    <div className="dropdown_item">Déposer Mon annonce</div>
-                    <div className="dropdown_item">Définir Mes Heures</div>
-                    <div className="dropdown_item">Mes Rendez-Vous</div>
+                    {role === 'pro' ? (
+                        <>
+                            <div className="dropdown_item">Mon Espace Pro</div>
+                            <div className="dropdown_item">Déposer Mon annonce</div>
+                            <div className="dropdown_item">Définir Mes Heures</div>
+                            <div className="dropdown_item">Mes Rendez-Vous</div>
+                        </>
+                    ) : null}
                     <div className="dropdown_item">Paramètre</div>
-                    <div className="dropdown_item_deconnexion" onClick={() => navigate('/')}>Déconnexion</div>
+                    <div className="dropdown_item_deconnexion" onClick={handleLogout}>Déconnexion</div>
                 </div>
             )}
         </div>
