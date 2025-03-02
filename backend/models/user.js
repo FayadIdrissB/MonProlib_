@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     prenom: { type: String, required: true }, // Prénom déjà présent
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    telephone: { type: String, required: true, unique: true },
     role: { type: String, enum: ['user', 'pro'], required: true },
     siret: { type: String, required: function () { return this.role === 'pro'; } }
 });

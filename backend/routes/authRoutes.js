@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { register, login, getUserById } = require('../controllers/authController'); // ✅ Ajouter getUserById
+const { register, login, getUserById, checkSiret, checkPhone } = require('../controllers/authController');
 
-router.post('/register', register); // Inscription (user & pro)
-router.post('/login', login); // Connexion
+// 🟢 Console.log pour vérifier si les fonctions sont bien importées
+console.log({
+    register,
+    login,
+    getUserById,
+    checkSiret,
+    checkPhone
+});
 
-// Nouvelle route pour récupérer un utilisateur par son ID
-router.get('/users/:id', getUserById); 
+router.get('/check-phone/:telephone', checkPhone);
+router.get('/check-siret/:siret', checkSiret);
+
+router.post('/register', register);
+router.post('/login', login);
+router.get('/users/:id', getUserById);
 
 module.exports = router;

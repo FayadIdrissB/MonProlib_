@@ -7,6 +7,7 @@ function HeaderConnexion() {
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
+    const buttonRef = useRef(null);
     const [prenom, setPrenom] = useState('');
     const [role, setRole] = useState('');
 
@@ -19,12 +20,17 @@ function HeaderConnexion() {
     }, []);
 
     const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
+        setMenuOpen(prevState => !prevState);
     };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
+            if (
+                menuRef.current && 
+                !menuRef.current.contains(event.target) &&
+                buttonRef.current && 
+                !buttonRef.current.contains(event.target)
+            ) {
                 setMenuOpen(false);
             }
         };
@@ -34,10 +40,20 @@ function HeaderConnexion() {
         };
     }, []);
 
+    // 🟢 Amélioration de la déconnexion
     const handleLogout = () => {
-        localStorage.clear();
-        navigate('/');
+        // Supprimer uniquement les éléments liés à l'authentification
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('prenom');
+
+        setMenuOpen(false);  // Fermer le menu
+        navigate('/');   // Redirection propre vers la page de connexion
     };
+
+    // 🟢 Fonction pour capitaliser le prénom
+    const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
     return (
         <div>
@@ -45,11 +61,20 @@ function HeaderConnexion() {
                 <div className="header_container">
                     <div className='header_container_connexion'>
                         <div>
-                            <img src={Logo} alt="" onClick={() => navigate('/')} className='logo_header' />
+                            <img 
+                                src={Logo} 
+                                alt="" 
+                                onClick={() => navigate('/')} 
+                                className='logo_header' 
+                            />
                         </div>
-                        <div className='header_container_button_connexion' onClick={toggleMenu}>
-                            Bonjour, {prenom || 'Utilisateur'}
-                        </div>
+                        <button 
+                            className='header_container_button_connexion' 
+                            onClick={toggleMenu}
+                            ref={buttonRef}
+                        >
+                            Bonjour, {prenom ? capitalize(prenom) : 'Utilisateur'}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -58,14 +83,27 @@ function HeaderConnexion() {
                 <div className="dropdown_menu" ref={menuRef}>
                     {role === 'pro' ? (
                         <>
-                            <div className="dropdown_item">Mon Espace Pro</div>
+                            <div 
+                                className="dropdown_item"
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    navigate('/mon-espace-pro');
+                                }}
+                            >
+                                Mon Espace Pro
+                            </div>
                             <div className="dropdown_item">Déposer Mon annonce</div>
                             <div className="dropdown_item">Définir Mes Heures</div>
                             <div className="dropdown_item">Mes Rendez-Vous</div>
                         </>
                     ) : null}
                     <div className="dropdown_item">Paramètre</div>
-                    <div className="dropdown_item_deconnexion" onClick={handleLogout}>Déconnexion</div>
+                    <div 
+                        className="dropdown_item_deconnexion" 
+                        onClick={handleLogout}
+                    >
+                        Déconnexion
+                    </div>
                 </div>
             )}
         </div>

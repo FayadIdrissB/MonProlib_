@@ -2,8 +2,8 @@ import './welcomePro.css';
 
 import { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import HeaderPro from '../../../Component/header_connexion/headerConnexion';
 import Footer from '../../../Component/footer/footer';
@@ -41,14 +41,14 @@ function WelcomePro() {
             <p className='body_container_text_paragraphe'>
               We believe that small changes to adopt sustainable practices can make a big impact.
             </p>
-            <div className='body_container_text_search'>
+         {/*<div className='body_container_text_search'>
               <p className='body_container_text_search_paragraphe'>
                 Search here...
               </p>
               <div>
                 <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: 'white' }} className="text-icone" />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className='body_container_image'>

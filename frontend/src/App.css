@@ -24,3 +24,9 @@ p
     color: white;
     font-family: 'Poppins', sans-serif;
 }
+
+button
+{
+  background-color: #2440A9;
+  border: none;
+}

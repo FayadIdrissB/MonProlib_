@@ -2,30 +2,92 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.register = async (req, res) => {
+// 🟢 Fonction pour vérifier l'existence du téléphone
+const checkPhone = async (req, res) => {
     try {
-        const { nom, prenom, email, password, siret } = req.body; // ✅ Ajouter nom et prenom
-        const existingUser = await User.findOne({ email });
+        const { telephone } = req.params;
+        const existingUser = await User.findOne({ telephone });
 
         if (existingUser) {
-            return res.status(400).json({ error: 'Cet email est déjà utilisé' });
+            return res.json({ exists: true });
+        } else {
+            return res.json({ exists: false });
         }
-
-        // Déterminer le rôle en fonction de la présence du SIRET
-        const role = siret ? 'pro' : 'user';
-
-        // ✅ Ajouter nom et prenom lors de la création de l'utilisateur
-        const user = new User({ nom, prenom, email, password, role, siret: siret || null });
-        await user.save();
-
-        res.status(201).json({ message: `Compte ${role} créé avec succès`, role });
     } catch (error) {
-        console.error(error); // ✅ Ajoute un log pour voir les erreurs dans la console
+        console.error('Erreur lors de la vérification du téléphone :', error);
         res.status(500).json({ error: 'Erreur serveur' });
     }
 };
 
-exports.login = async (req, res) => {
+// 🟢 Fonction pour vérifier l'existence du SIRET
+const checkSiret = async (req, res) => {
+    try {
+        const { siret } = req.params;
+        const existingUser = await User.findOne({ siret });
+
+        if (existingUser) {
+            return res.json({ exists: true });
+        } else {
+            return res.json({ exists: false });
+        }
+    } catch (error) {
+        console.error('Erreur lors de la vérification du SIRET :', error);
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+};
+
+// 🟢 Fonction d'inscription
+const register = async (req, res) => {
+    try {
+        const { nom, prenom, email, password, telephone, siret } = req.body;
+
+        // 🟢 Vérifier l'existence de l'email
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Cet email est déjà utilisé' });
+        }
+
+        // 🟢 Vérifier l'existence du téléphone
+        const existingPhone = await User.findOne({ telephone });
+        if (existingPhone) {
+            return res.status(400).json({ error: 'Ce numéro de téléphone est déjà utilisé' });
+        }
+
+        // 🟢 Vérifier l'existence du SIRET
+        if (siret) {
+            const existingSiret = await User.findOne({ siret });
+            if (existingSiret) {
+                return res.status(400).json({ error: 'Ce numéro de SIRET est déjà utilisé' });
+            }
+        }
+
+        const role = siret ? 'pro' : 'user';
+        const hashedPassword = await bcrypt.hash(password, 10); // 🟢 Hash du mot de passe
+
+        const user = new User({ nom, prenom, email, password: hashedPassword, telephone, role, siret: siret || null });
+        await user.save();
+
+        res.status(201).json({ message: `Compte ${role} créé avec succès`, role });
+    } catch (error) {
+        console.error('Erreur lors de l\'inscription :', error);
+
+        // 🟢 Gérer les erreurs de duplication (email, téléphone, SIRET)
+        if (error.code === 11000) {
+            const field = Object.keys(error.keyValue)[0];
+            const message = field === 'email' ? 'Cet email est déjà utilisé' :
+                            field === 'telephone' ? 'Ce numéro de téléphone est déjà utilisé' :
+                            field === 'siret' ? 'Ce numéro de SIRET est déjà utilisé' :
+                            'Un champ unique est déjà utilisé';
+
+            return res.status(400).json({ error: message });
+        }
+
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+};
+
+// 🟢 Fonction de connexion
+const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -46,16 +108,18 @@ exports.login = async (req, res) => {
             token, 
             role: user.role, 
             userId: user._id, 
-            prenom: user.prenom  // ✅ Ajout du prénom
+            prenom: user.prenom
         });
     } catch (error) {
+        console.error('Erreur lors de la connexion :', error);
         res.status(500).json({ error: 'Erreur serveur' });
     }
 };
 
-exports.getUserById = async (req, res) => {
+// 🟢 Fonction pour obtenir un utilisateur par ID
+const getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password'); // On enlève le password pour la sécurité
+        const user = await User.findById(req.params.id).select('-password'); // Exclure le mot de passe pour la sécurité
 
         if (!user) {
             return res.status(404).json({ error: 'Utilisateur non trouvé' });
@@ -66,4 +130,13 @@ exports.getUserById = async (req, res) => {
         console.error('Erreur lors de la récupération de l\'utilisateur :', error);
         res.status(500).json({ error: 'Erreur serveur' });
     }
+};
+
+// 🟢 Export des fonctions
+module.exports = {
+    checkPhone,
+    checkSiret,
+    register,
+    login,
+    getUserById
 };

@@ -23,7 +23,7 @@ function FormLogin() {
             const data = await response.json();
 
             if (response.ok) {
-                setMsg({ text: '✅ Connexion réussie ! Redirection en cours...', type: 'success' });
+              // { setMsg({ text: '✅ Connexion réussie ! Redirection en cours...', type: 'success' });  }
 
                 // Stocker les informations de l'utilisateur dans le localStorage
                 localStorage.setItem('token', data.token);
@@ -38,7 +38,7 @@ function FormLogin() {
                     } else {
                         navigate(`/welcome_user/${data.userId}`);
                     }
-                }, 1500);
+                }, 100);
             } else {
                 setMsg({ text: data.error || '❌ Email ou mot de passe incorrect', type: 'error' });
             }
