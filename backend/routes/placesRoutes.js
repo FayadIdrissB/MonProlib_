@@ -3,6 +3,35 @@ const axios = require("axios");
 const router = express.Router();
 require("dotenv").config();
 
+// 🟢 Fonction de normalisation des mots-clés
+const normalizeQuery = (query) => {
+    const lowerQuery = query.toLowerCase();
+
+    // Dictionnaire de normalisation
+    const keywordMap = {
+        "lavage auto": "car wash",
+        "station de lavage": "car wash",
+        "lavage voiture": "car wash",
+        "garage auto": "garage",
+        "réparation voiture": "garage",
+        "carrosserie": "garage",
+        "atelier mécanique": "garage",
+        "mécanicien": "garage",
+        "mécanicien auto": "garage",
+        "mécanicien automobile": "garage"
+    };
+
+    // Normaliser les mots-clés en utilisant le dictionnaire
+    for (const [key, value] of Object.entries(keywordMap)) {
+        if (lowerQuery.includes(key)) {
+            return value;
+        }
+    }
+
+    // Si aucun mot-clé connu n'est trouvé, retourner la requête d'origine
+    return lowerQuery;
+};
+
 router.get("/search", async (req, res) => {
     const { query, location } = req.query;
 
@@ -33,14 +62,17 @@ router.get("/search", async (req, res) => {
 
         console.log(`📍 Ville détectée : ${cityName} | Coordonnées : lat=${lat}, lng=${lng}`);
 
+        // 🟢 Normaliser la requête utilisateur
+        const normalizedQuery = normalizeQuery(query);
+
         // 2️⃣ Déterminer le type de recherche
         let placeType = "";
-        if (query.toLowerCase().includes("garage")) {
-            placeType = "car_repair";  // 🔧 Recherche de garages uniquement
-        } else if (query.toLowerCase().includes("lavage") || query.toLowerCase().includes("car wash")) {
-            placeType = "car_wash";  // 🚗 Recherche de stations de lavage uniquement
+        if (normalizedQuery.includes("garage")) {
+            placeType = "car_repair";
+        } else if (normalizedQuery.includes("car wash")) {
+            placeType = "car_wash";
         } else {
-            placeType = ["car_repair", "car_wash"];  // ✅ Recherche des deux si pas de précision
+            return res.status(400).json({ error: "Recherche non autorisée. Veuillez chercher un garage ou un lavage auto." });
         }
 
         console.log(`🔍 Type de recherche détecté : ${placeType}`);
@@ -52,7 +84,7 @@ router.get("/search", async (req, res) => {
                 params: {
                     location: `${lat},${lng}`,
                     radius: 5000,
-                    type: placeType,  // ✅ Appliquer le bon type
+                    type: placeType,
                     key: process.env.GOOGLE_API_KEY,
                 },
             }
@@ -60,7 +92,6 @@ router.get("/search", async (req, res) => {
 
         console.log("📌 Résultats bruts API Google Places :", placesResponse.data);
 
-        // 4️⃣ Filtrer pour garder uniquement les résultats de la ville demandée
         const filteredResults = placesResponse.data.results.filter(place => {
             const address = place.formatted_address || place.vicinity || "";
             return address.toLowerCase().includes(cityName.toLowerCase());
@@ -72,7 +103,6 @@ router.get("/search", async (req, res) => {
             return res.status(404).json({ message: `Aucun résultat trouvé pour "${query}" à ${cityName}.` });
         }
 
-        // 5️⃣ Retourner uniquement les résultats valides
         res.json({ results: filteredResults });
     } catch (error) {
         console.error("❌ Erreur API Google Places :", error);

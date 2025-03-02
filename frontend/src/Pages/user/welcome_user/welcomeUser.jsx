@@ -47,7 +47,7 @@ function WelcomeUser() {
         </div>
       ) : searchPerformed ? (
         <div className="container_user">
-          <h2>Aucun garage trouvé</h2>
+          <h2>Aucun résultat retrouvé</h2>
         </div>
       ) : null}
     </div>
