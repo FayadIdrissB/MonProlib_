@@ -55,11 +55,23 @@ const Calendar = () => {
 
   const renderDays = () => {
     const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
-    return days.map((day, i) => (
-      <div key={i} className="day-header">
-        {day}
-      </div>
-    ));
+    const firstDayOfWeek = new Date(currentDate);
+    firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+
+    return days.map((day, i) => {
+      const dayDate = new Date(firstDayOfWeek);
+      dayDate.setDate(firstDayOfWeek.getDate() + i);
+
+      return (
+        <div key={i} className="day-header">
+          {day}{" "}
+          {dayDate.toLocaleDateString("fr-FR", {
+            day: "numeric",
+            month: "numeric",
+          })}
+        </div>
+      );
+    });
   };
 
   const renderSlots = () => {
