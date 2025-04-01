@@ -4,10 +4,15 @@
   box-sizing: border-box;
 }
 
+.buttons {
+  align-items: center;
+}
+
 button {
   margin: 10px;
   padding: 8px 15px;
   cursor: pointer;
+  align-items: center;
 }
 
 .calendar {
