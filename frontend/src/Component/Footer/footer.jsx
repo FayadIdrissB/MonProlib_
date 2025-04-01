@@ -23,7 +23,7 @@ function Footer() {
                     <div className='footer_container_list_block'>
                         <p className='footer_container_list_title'>Recherches fréquentes</p>
                         <p className='list'> À propos de nous </p>
-                        <p className='list'> Carrière </p>
+                        <p className='list'> Carrières </p>
                         <p className='list'> Besoin d'aide ? </p>
                     </div>
                     <div className='footer_container_list_block'>
