@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./calendar.css";
+import PopupSlot from "../popupSlot/popupSlot";
 
 const Calendar = () => {
   const [slots, setSlots] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selection, setSelection] = useState({ start: null, end: null });
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [selectedSlotTime, setSelectedSlotTime] = useState(null);
 
   useEffect(() => {
     fetchSlots();
@@ -46,11 +49,7 @@ const Calendar = () => {
     dateClicked.setDate(dateClicked.getDate() - dateClicked.getDay() + day);
     dateClicked.setHours(hour, 0, 0, 0);
 
-    if (!selection.start || (selection.start && selection.end)) {
-      setSelection({ start: dateClicked, end: null });
-    } else if (selection.start && !selection.end) {
-      setSelection({ ...selection, end: dateClicked });
-    }
+    openPopup(dateClicked);
   };
 
   const renderDays = () => {
@@ -73,6 +72,31 @@ const Calendar = () => {
         </div>
       );
     });
+  };
+
+  //PopupSlot functions
+  const openPopup = (slotTime) => {
+    setSelectedSlotTime(slotTime);
+    setPopupVisible(true);
+  };
+
+  const closePopup = () => {
+    setPopupVisible(false);
+  };
+
+  const saveSlot = async (title, description) => {
+    await fetch("http://localhost:3000/api/slotsCalendar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        start: selectedSlotTime,
+        end: new Date(selectedSlotTime.getTime() + 60 * 60 * 1000), // Créneau d'une heure
+        title,
+        description,
+      }),
+    });
+    closePopup();
+    fetchSlots();
   };
 
   const renderSlots = () => {
@@ -106,6 +130,8 @@ const Calendar = () => {
                     minute: "2-digit",
                   })}
                 </span>
+                <span>{slot.title}</span>
+                <span>{slot.description}</span>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -127,11 +153,17 @@ const Calendar = () => {
     <div className="calendar-container">
       <button onClick={() => navigateWeek(-1)}>Précédent</button>
       <button onClick={() => navigateWeek(1)}>Suivant</button>
-      <button onClick={addSlot}>Ajouter créneau</button>
       <div className="calendar">
         <div className="days-row">{renderDays()}</div>
         <div className="slots-grid">{renderSlots()}</div>
       </div>
+
+      <PopupSlot
+        visible={popupVisible}
+        onClose={closePopup}
+        onSave={saveSlot}
+        slotTime={selectedSlotTime || new Date()}
+      />
     </div>
   );
 };
