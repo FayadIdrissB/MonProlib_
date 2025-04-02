@@ -7,33 +7,31 @@ import Logo from "../../image/logoP.png";
 function Header() {
   const navigate = useNavigate();
 
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null); // Référence pour détecter les clics en dehors
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const menuRef = useRef(null);
 
-  // Fonction pour basculer l'affichage du menu
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  // Bascule l'affichage du menu mobile
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
   };
 
-  // Fonction pour fermer le menu si on clique en dehors
+  // Ferme le menu si l'utilisateur clique en dehors
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setShowDropdown(false);
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setShowMobileMenu(false);
     }
   };
 
-  // Ajout d'un écouteur d'événement pour détecter les clics en dehors
   useEffect(() => {
-    if (showDropdown) {
+    if (showMobileMenu) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showDropdown]);
+  }, [showMobileMenu]);
 
   return (
     <div className="header">
@@ -41,13 +39,18 @@ function Header() {
         <div className="header_container_button-logo">
           <img
             src={Logo}
-            alt=""
+            alt="Logo"
             onClick={() => navigate("/")}
             className="logo_header_"
           />
         </div>
-        <div className="header_container_button">
-          <button className="header_container_button_paragraphe">
+
+        {/* Navigation classique pour desktop */}
+        <div className="header_container_button desktop-nav">
+          <button
+            className="header_container_button_paragraphe"
+            onClick={() => navigate("/about")}
+          >
             À propos
           </button>
           <button
@@ -56,33 +59,54 @@ function Header() {
           >
             Connexion
           </button>
-
-          {/* Bouton "Get Started" avec gestion du menu au clic */}
           <button
             className="header_container_button_started"
-            onClick={toggleDropdown}
-            ref={dropdownRef}
+            onClick={() => navigate("/register")}
           >
             Inscription
-            {showDropdown && (
-              <div className="menu">
-                <button
-                  className="menu_item"
-                  onClick={() => navigate("/register_user")}
-                >
-                  Compte Utilisateur
-                </button>
-                <button
-                  className="menu_item"
-                  onClick={() => navigate("/register_pro")}
-                >
-                  Compte Pro
-                </button>
-              </div>
-            )}
           </button>
         </div>
+
+        {/* Icône burger pour mobile */}
+        <div className="burger-icon mobile-nav" onClick={toggleMobileMenu}>
+          <span className="burger-line"></span>
+          <span className="burger-line"></span>
+          <span className="burger-line"></span>
+        </div>
       </div>
+
+      {/* Menu mobile */}
+      {showMobileMenu && (
+        <div className="mobile-menu" ref={menuRef}>
+          <button
+            className="mobile-menu_item"
+            onClick={() => {
+              navigate("/about");
+              setShowMobileMenu(false);
+            }}
+          >
+            À propos
+          </button>
+          <button
+            className="mobile-menu_item"
+            onClick={() => {
+              navigate("/Login");
+              setShowMobileMenu(false);
+            }}
+          >
+            Connexion
+          </button>
+          <button
+            className="mobile-menu_item"
+            onClick={() => {
+              navigate("/register");
+              setShowMobileMenu(false);
+            }}
+          >
+            Inscription
+          </button>
+        </div>
+      )}
     </div>
   );
 }
