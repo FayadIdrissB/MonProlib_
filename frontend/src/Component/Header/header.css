@@ -1,4 +1,4 @@
-/* Styles généraux du header */
+/* Style global du header */
 .header {
   display: flex;
   flex-direction: column;
@@ -10,20 +10,33 @@
   align-items: center;
   height: 100px;
   width: 100%;
+  padding-top: 20px;
   background-color: #2440a9;
 }
 
-.logo_header_ {
-  width: 100px;
-  cursor: pointer;
+/* Logo */
+.header_container_button-logo {
+  margin-left: 20px;
 }
 
-/* Navigation classique (desktop) */
-.desktop-nav {
+.logo_header_ {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  cursor: pointer;
+  margin-top: -25px;
+}
+
+/* Navigation Desktop */
+.header_container_button {
   display: flex;
   justify-content: space-evenly;
-  width: 450px;
   align-items: center;
+  width: 450px;
+}
+
+.desktop-nav {
+  display: flex;
 }
 
 .header_container_button_paragraphe {
@@ -35,6 +48,7 @@
   cursor: pointer;
 }
 
+/* Bouton Inscription */
 .header_container_button_started {
   display: flex;
   justify-content: center;
@@ -55,12 +69,43 @@
   color: white;
 }
 
-/* Icône burger (mobile) */
+/* Dropdown pour Inscription (desktop) */
+.menu {
+  position: fixed;
+  top: 90px;
+  left: 92.5%;
+  transform: translateX(-50%);
+  background-color: #3778c4;
+  color: white;
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.menu_item {
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s;
+  background-color: #3778c4;
+  border: none;
+}
+
+.menu_item:hover {
+  background-color: #2440a9;
+}
+
+/* Icône Burger (mobile) */
 .burger-icon {
-  display: none; /* Masquée par défaut (affichée en mobile) */
+  display: none;
   flex-direction: column;
   cursor: pointer;
   padding: 10px;
+  margin-right: 20px;
 }
 
 .burger-line {
@@ -70,7 +115,7 @@
   margin: 4px 0;
 }
 
-/* Menu mobile */
+/* Menu Mobile */
 .mobile-menu {
   display: flex;
   flex-direction: column;
@@ -93,18 +138,16 @@
   background-color: #3778c4;
 }
 
-/* Media Queries pour les écrans de moins de 600px */
+/* Responsive : mobile */
 @media only screen and (max-width: 600px) {
-  .logo_header_ {
-    width: 100px;
-    height: 100px;
-  }
-  /* Masquer la navigation desktop */
   .desktop-nav {
     display: none;
   }
-  /* Afficher l'icône burger */
   .burger-icon {
     display: flex;
+  }
+  .logo_header_ {
+    width: 100px;
+    height: 100px;
   }
 }

@@ -7,29 +7,57 @@ import Logo from "../../image/logoP.png";
 function Header() {
   const navigate = useNavigate();
 
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const menuRef = useRef(null);
+  // État pour le dropdown du bouton Inscription (version desktop)
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Bascule l'affichage du menu mobile
-  const toggleMobileMenu = () => {
-    setShowMobileMenu(!showMobileMenu);
+  // État pour le menu mobile (burger)
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const mobileMenuRef = useRef(null);
+
+  // Bascule du dropdown desktop
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
   };
 
-  // Ferme le menu si l'utilisateur clique en dehors
-  const handleClickOutside = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
+  // Bascule du menu mobile
+  const toggleMobileMenu = () => {
+    setShowMobileMenu((prev) => !prev);
+  };
+
+  // Ferme le dropdown si clic en dehors (desktop)
+  const handleClickOutsideDropdown = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+
+  // Ferme le menu mobile si clic en dehors (mobile)
+  const handleClickOutsideMobileMenu = (event) => {
+    if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
       setShowMobileMenu(false);
     }
   };
 
   useEffect(() => {
-    if (showMobileMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutsideDropdown);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, [showDropdown]);
+
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.addEventListener("mousedown", handleClickOutsideMobileMenu);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideMobileMenu);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideMobileMenu);
     };
   }, [showMobileMenu]);
 
@@ -45,7 +73,7 @@ function Header() {
           />
         </div>
 
-        {/* Navigation classique pour desktop */}
+        {/* Navigation Desktop */}
         <div className="header_container_button desktop-nav">
           <button
             className="header_container_button_paragraphe"
@@ -59,15 +87,39 @@ function Header() {
           >
             Connexion
           </button>
-          <button
-            className="header_container_button_started"
-            onClick={() => navigate("/register")}
-          >
-            Inscription
-          </button>
+          <div className="dropdown-container" ref={dropdownRef}>
+            <button
+              className="header_container_button_started"
+              onClick={toggleDropdown}
+            >
+              Inscription
+            </button>
+            {showDropdown && (
+              <div className="menu">
+                <button
+                  className="menu_item"
+                  onClick={() => {
+                    navigate("/register_user");
+                    setShowDropdown(false);
+                  }}
+                >
+                  Compte Utilisateur
+                </button>
+                <button
+                  className="menu_item"
+                  onClick={() => {
+                    navigate("/register_pro");
+                    setShowDropdown(false);
+                  }}
+                >
+                  Compte Pro
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Icône burger pour mobile */}
+        {/* Icône burger pour Mobile */}
         <div className="burger-icon mobile-nav" onClick={toggleMobileMenu}>
           <span className="burger-line"></span>
           <span className="burger-line"></span>
@@ -75,9 +127,9 @@ function Header() {
         </div>
       </div>
 
-      {/* Menu mobile */}
+      {/* Menu Mobile */}
       {showMobileMenu && (
-        <div className="mobile-menu" ref={menuRef}>
+        <div className="mobile-menu" ref={mobileMenuRef}>
           <button
             className="mobile-menu_item"
             onClick={() => {
@@ -99,11 +151,20 @@ function Header() {
           <button
             className="mobile-menu_item"
             onClick={() => {
-              navigate("/register");
+              navigate("/register_user");
               setShowMobileMenu(false);
             }}
           >
-            Inscription
+            Compte Utilisateur
+          </button>
+          <button
+            className="mobile-menu_item"
+            onClick={() => {
+              navigate("/register_pro");
+              setShowMobileMenu(false);
+            }}
+          >
+            Compte Pro
           </button>
         </div>
       )}
