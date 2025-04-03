@@ -11,31 +11,15 @@ function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
-  // État pour le menu mobile (burger)
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const mobileMenuRef = useRef(null);
-
   // Bascule du dropdown desktop
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
-  };
-
-  // Bascule du menu mobile
-  const toggleMobileMenu = () => {
-    setShowMobileMenu((prev) => !prev);
   };
 
   // Ferme le dropdown si clic en dehors (desktop)
   const handleClickOutsideDropdown = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
-    }
-  };
-
-  // Ferme le menu mobile si clic en dehors (mobile)
-  const handleClickOutsideMobileMenu = (event) => {
-    if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
-      setShowMobileMenu(false);
     }
   };
 
@@ -49,17 +33,6 @@ function Header() {
       document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
   }, [showDropdown]);
-
-  useEffect(() => {
-    if (showMobileMenu) {
-      document.addEventListener("mousedown", handleClickOutsideMobileMenu);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutsideMobileMenu);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutsideMobileMenu);
-    };
-  }, [showMobileMenu]);
 
   return (
     <div className="header">
@@ -118,56 +91,7 @@ function Header() {
             )}
           </div>
         </div>
-
-        {/* Icône burger pour Mobile */}
-        <div className="burger-icon mobile-nav" onClick={toggleMobileMenu}>
-          <span className="burger-line"></span>
-          <span className="burger-line"></span>
-          <span className="burger-line"></span>
-        </div>
       </div>
-
-      {/* Menu Mobile */}
-      {showMobileMenu && (
-        <div className="mobile-menu" ref={mobileMenuRef}>
-          <button
-            className="mobile-menu_item"
-            onClick={() => {
-              navigate("/about");
-              setShowMobileMenu(false);
-            }}
-          >
-            À propos
-          </button>
-          <button
-            className="mobile-menu_item"
-            onClick={() => {
-              navigate("/Login");
-              setShowMobileMenu(false);
-            }}
-          >
-            Connexion
-          </button>
-          <button
-            className="mobile-menu_item"
-            onClick={() => {
-              navigate("/register_user");
-              setShowMobileMenu(false);
-            }}
-          >
-            Compte Utilisateur
-          </button>
-          <button
-            className="mobile-menu_item"
-            onClick={() => {
-              navigate("/register_pro");
-              setShowMobileMenu(false);
-            }}
-          >
-            Compte Pro
-          </button>
-        </div>
-      )}
     </div>
   );
 }

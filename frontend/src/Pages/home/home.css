@@ -99,33 +99,3 @@ p {
   object-fit: cover;
   border-radius: 15px;
 }
-
-/* responsive media queries */
-
-@media only screen and (max-width: 600px) {
-
-  /* body */
-  .body_ {
-    height: 600px;
-  }
-  .body_container {
-    width: 100%;
-  }
-  .body_container_image {
-    width: 100%;
-    height: 100%;
-  }
-
-  .body_container_text {
-    display: block;
-  }
-  .body_container_text_title {
-    text-align: center;
-    font-size: 40px;
-    display: grid;
-  }
-  .body_container_text_paragraphe {
-    font-size: 20px;
-    text-align: center;
-  }
-}
