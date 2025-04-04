@@ -7,31 +7,30 @@ import Logo from "../../image/logoP.png";
 function Header() {
   const navigate = useNavigate();
 
+  // État pour le dropdown du bouton Inscription (version desktop)
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null); // Référence pour détecter les clics en dehors
+  const dropdownRef = useRef(null);
 
-  // Fonction pour basculer l'affichage du menu
+  // Bascule du dropdown desktop
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    setShowDropdown((prev) => !prev);
   };
 
-  // Fonction pour fermer le menu si on clique en dehors
-  const handleClickOutside = (event) => {
+  // Ferme le dropdown si clic en dehors (desktop)
+  const handleClickOutsideDropdown = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
     }
   };
 
-  // Ajout d'un écouteur d'événement pour détecter les clics en dehors
   useEffect(() => {
     if (showDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutsideDropdown);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
     }
-
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
   }, [showDropdown]);
 
@@ -41,13 +40,18 @@ function Header() {
         <div className="header_container_button-logo">
           <img
             src={Logo}
-            alt=""
+            alt="Logo"
             onClick={() => navigate("/")}
             className="logo_header_"
           />
         </div>
-        <div className="header_container_button">
-          <button className="header_container_button_paragraphe">
+
+        {/* Navigation Desktop */}
+        <div className="header_container_button desktop-nav">
+          <button
+            className="header_container_button_paragraphe"
+            onClick={() => navigate("/about")}
+          >
             À propos
           </button>
           <button
@@ -56,31 +60,38 @@ function Header() {
           >
             Connexion
           </button>
+          <div className="dropdown-container" ref={dropdownRef}>
+            <button
+              className="header_container_button_started"
+              onClick={toggleDropdown}
+            >
+              Inscription
+            </button>
 
-          {/* Bouton "Get Started" avec gestion du menu au clic */}
-          <button
-            className="header_container_button_started"
-            onClick={toggleDropdown}
-            ref={dropdownRef}
-          >
-            Inscription
             {showDropdown && (
               <div className="menu">
                 <button
                   className="menu_item"
-                  onClick={() => navigate("/register_user")}
+                  onClick={() => {
+                    navigate("/register_user");
+                    setShowDropdown(false);
+                  }}
                 >
                   Compte Utilisateur
                 </button>
                 <button
                   className="menu_item"
-                  onClick={() => navigate("/register_pro")}
+                  onClick={() => {
+                    navigate("/register_pro");
+                    setShowDropdown(false);
+                  }}
                 >
                   Compte Pro
                 </button>
               </div>
             )}
-          </button>
+          </div>
+
         </div>
       </div>
     </div>
