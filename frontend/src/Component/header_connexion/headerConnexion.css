@@ -1,80 +1,74 @@
-
-
-.header_container_connexion
-{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+.header_container_connexion {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.logo_header
-{
-    margin-top: -25px;
-    margin-left: 20px;
-    width: 150px;
-    height: 100px;
-    object-fit: cover;
+.logo_header {
+  margin-top: -25px;
+  margin-left: 20px;
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
 }
 
-.header_container_button_connexion
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    height: 40px;
-    width: 170px;
-    color: rgb(77, 75, 75);;
-    background-color: white;
-    border-radius: 20px;
-    margin-top: -10px;
-    margin-right: 3%;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
+.header_container_button_connexion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  height: 40px;
+  width: 170px;
+  color: rgb(77, 75, 75);
+  background-color: white;
+  border-radius: 20px;
+  margin-top: -10px;
+  margin-right: 3%;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
 }
-
 
 /* Animation pour l'affichage du menu */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dropdown_menu {
-    position: fixed;
-    margin-top: 30px;
-    top: 90px;
-    right: 0.5%;
-    background: #1A41AF;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
+  position: fixed;
+  z-index: 1000;
+  margin-top: 30px;
+  top: 90px;
+  right: 0.5%;
+  background: #1a41af;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
 }
 
 .dropdown_item {
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.3s;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.dropdown_item_deconnexion
-{
-    background-color: blue;
-    border-radius: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.3s;
+.dropdown_item_deconnexion {
+  background-color: blue;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .dropdown_item:hover {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
