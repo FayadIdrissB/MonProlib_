@@ -39,76 +39,76 @@ const checkSiret = async (req, res) => {
 // 🟢 Fonction d'inscription
 const register = async (req, res) => {
     try {
-        const { nom, prenom, email, password, telephone, siret } = req.body;
+        const { nom, prenom, email, password, telephone, role, siret } = req.body;
 
-        // 🟢 Vérifier l'existence de l'email
+        // Vérification si l'utilisateur existe déjà
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'Cet email est déjà utilisé' });
         }
 
-        // 🟢 Vérifier l'existence du téléphone
-        const existingPhone = await User.findOne({ telephone });
-        if (existingPhone) {
-            return res.status(400).json({ error: 'Ce numéro de téléphone est déjà utilisé' });
+        // Si le rôle est 'pro', assure-toi que le siret est fourni
+        if (role === 'pro' && !siret) {
+            return res.status(400).json({ error: 'Le numéro SIRET est requis pour un compte professionnel' });
         }
 
-        // 🟢 Vérifier l'existence du SIRET
-        if (siret) {
-            const existingSiret = await User.findOne({ siret });
-            if (existingSiret) {
-                return res.status(400).json({ error: 'Ce numéro de SIRET est déjà utilisé' });
-            }
-        }
+        // Création de l'utilisateur avec les données fournies
+        const newUser = new User({
+            nom,
+            prenom,
+            email,
+            password,
+            telephone,
+            role,
+            siret
+        });
 
-        const role = siret ? 'pro' : 'user';
-        const hashedPassword = await bcrypt.hash(password, 10); // 🟢 Hash du mot de passe
+        // Sauvegarde de l'utilisateur dans la base de données
+        await newUser.save();
 
-        const user = new User({ nom, prenom, email, password: hashedPassword, telephone, role, siret: siret || null });
-        await user.save();
-
-        res.status(201).json({ message: `Compte ${role} créé avec succès`, role });
+        res.status(201).json({
+            message: 'Utilisateur créé avec succès',
+            userId: newUser._id,
+            prenom: newUser.prenom
+        });
     } catch (error) {
         console.error('Erreur lors de l\'inscription :', error);
-
-        // 🟢 Gérer les erreurs de duplication (email, téléphone, SIRET)
-        if (error.code === 11000) {
-            const field = Object.keys(error.keyValue)[0];
-            const message = field === 'email' ? 'Cet email est déjà utilisé' :
-                            field === 'telephone' ? 'Ce numéro de téléphone est déjà utilisé' :
-                            field === 'siret' ? 'Ce numéro de SIRET est déjà utilisé' :
-                            'Un champ unique est déjà utilisé';
-
-            return res.status(400).json({ error: message });
-        }
-
         res.status(500).json({ error: 'Erreur serveur' });
     }
 };
-
 // 🟢 Fonction de connexion
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        
+        // Recherche l'utilisateur dans la base de données
         const user = await User.findOne({ email });
-
+        
         if (!user) {
             return res.status(400).json({ error: 'Email ou mot de passe incorrect' });
         }
 
+        // Comparaison du mot de passe en clair avec le mot de passe haché dans la base de données
         const isMatch = await bcrypt.compare(password, user.password);
+        
         if (!isMatch) {
             return res.status(400).json({ error: 'Email ou mot de passe incorrect' });
         }
 
-        const token = jwt.sign({ userId: user._id, role: user.role }, 'SECRET_KEY', { expiresIn: '1h' });
+        // Création du token JWT
+        const token = jwt.sign(
+            { userId: user._id, role: user.role },
+            'SECRET_KEY', // Remplace cela par une clé secrète plus sécurisée, idéalement dans un fichier de config
+            { expiresIn: '1h' }
+        );
 
+        // Retourne la réponse avec le token et d'autres informations de l'utilisateur
         res.json({ 
             message: 'Connexion réussie', 
             token, 
             role: user.role, 
             userId: user._id, 
-            prenom: user.prenom
+            prenom: user.prenom 
         });
     } catch (error) {
         console.error('Erreur lors de la connexion :', error);

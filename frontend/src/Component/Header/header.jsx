@@ -67,6 +67,7 @@ function Header() {
             >
               Inscription
             </button>
+
             {showDropdown && (
               <div className="menu">
                 <button
@@ -90,6 +91,7 @@ function Header() {
               </div>
             )}
           </div>
+
         </div>
       </div>
     </div>
