@@ -1,133 +1,101 @@
-
-body
-{
+body {
   width: 100%;
-  background-color: #3778C4;
+  background-color: #3778c4;
 }
 
-
-h1
-{
-    color: white;
-    font-family: 'Poppins', sans-serif;
+h1 {
+  color: white;
+  font-family: "Poppins", sans-serif;
 }
 
-
-p
-{
-    color: white;
-    font-family: 'Poppins', sans-serif;
+p {
+  color: white;
+  font-family: "Poppins", sans-serif;
 }
 
-
-.body_
-{
-    display: flex;
-    margin-top: 50px;
-    height: 400px;
-    width: 100%;
+.body_ {
+  display: flex;
+  margin-top: 50px;
+  height: 400px;
+  width: 100%;
 }
 
-
-.body_container
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 400px;
-    width: 50%;
+.body_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+  width: 50%;
 }
 
-
-.body_container_text
-{
-    margin-top: -60px;
-    height: 400px;
-    width: 70%;
+.body_container_text {
+  margin-top: -60px;
+  height: 400px;
+  width: 70%;
 }
 
-
-.body_container_text_title
-{
-    font-size: 48px;
-    font-weight: bold;
-    color: white;
-    padding: 20px;
-    line-height: 1.2;
-    font-family: Arial, sans-serif;
+.body_container_text_title {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  padding: 20px;
+  line-height: 1.2;
+  font-family: Arial, sans-serif;
 }
 
-
-.body_logo
-{
-    width: 25%;
+.body_logo {
+  width: 25%;
 }
 
-
-.body_container_text_paragraphe
-{
-   color: white;
+.body_container_text_paragraphe {
+  color: white;
 }
 
-
-.body_container_text_search
-{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    width: 100%;
-    background-color: #2440A9;
-    border-radius: 20px;
-    border: #2440A9 1px solid;
-    margin-top: 20px;
+.body_container_text_search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: 100%;
+  background-color: #2440a9;
+  border-radius: 20px;
+  border: #2440a9 1px solid;
+  margin-top: 20px;
 }
 
-.body_container_text_search_paragraphe
-{
-    margin-left: 15px;
-    color: white;
+.body_container_text_search_paragraphe {
+  margin-left: 15px;
+  color: white;
 }
 
-
-.text-icone
-{
-    color: white;
-    width: 60px;
+.text-icone {
+  color: white;
+  width: 60px;
 }
 
-
-.body_container_image
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-    width: 50%;
+.body_container_image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 50%;
 }
 
-
-.mecanicien_img
-{
-    height: 85%;
-    width: 85%;
-    object-fit: cover;
-    border-radius: 15px;
+.mecanicien_img {
+  height: 85%;
+  width: 85%;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
-
-.text-icone
-{
-    color: black;
-    width: 60px;
+.text-icone {
+  color: black;
+  width: 60px;
 }
 
-
-.carousel_img
-{
-    height: 85%;
-    width: 85%;
-    object-fit: cover;
-    border-radius: 15px;
+.carousel_img {
+  height: 85%;
+  width: 85%;
+  object-fit: cover;
+  border-radius: 15px;
 }
-

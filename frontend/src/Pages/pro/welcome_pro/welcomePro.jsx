@@ -7,12 +7,12 @@ import { motion } from "framer-motion";
 
 import HeaderPro from '../../../Component/header_connexion/headerConnexion';
 import Footer from '../../../Component/footer/footer';
-import Logo from '../../../Image/logoP.png';
+import Logo from '../../../image/logoP.png';
 
 // Importation des images locales
-import image1 from "../../../Image/mecanicien.jpeg";
-import image2 from "../../../Image/artisan.jpg";
-import image3 from "../../../Image/laveur_auto.jpg";
+import image1 from "../../../image/mecanicien.jpeg";
+import image2 from "../../../image/artisan.jpg";
+import image3 from "../../../image/laveur_auto.jpg";
 
 const images = [image1, image2, image3];
 

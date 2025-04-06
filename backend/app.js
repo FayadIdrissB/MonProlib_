@@ -8,6 +8,7 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 const placesRoutes = require("./routes/placesRoutes");
+const slotRoutes = require("./routes/slotRoutes");
 
 // Chargement des variables d'environnement
 require("dotenv").config();
@@ -37,6 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/places", placesRoutes);
+app.use("/api/slotsCalendar", slotRoutes);
 
 // Gestion des routes non trouvées
 app.use((req, res) => {
