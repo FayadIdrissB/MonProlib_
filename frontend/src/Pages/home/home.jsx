@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../../Component/Header/header.jsx";
-import Footer from "../../Component/Footer/footer.jsx";
+import Header from "../../Component/header/header.jsx";
+import Footer from "../../Component/footer/footer.jsx";
 import Logo from "../../image/logoP.png";
 
 // Importation des images locales
@@ -59,7 +59,7 @@ function Home() {
                             <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: 'white' }}  className="text-icone" />
                         </div>
                     </div>
-                    */}
+            */}
           </div>
         </div>
         <div className="body_container_image">

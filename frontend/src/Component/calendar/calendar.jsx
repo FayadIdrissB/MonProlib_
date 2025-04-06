@@ -74,7 +74,6 @@ const Calendar = () => {
     });
   };
 
-  //PopupSlot functions
   const openPopup = (slotTime) => {
     setSelectedSlotTime(slotTime);
     setPopupVisible(true);
@@ -90,7 +89,7 @@ const Calendar = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         start: selectedSlotTime,
-        end: new Date(selectedSlotTime.getTime() + 60 * 60 * 1000), // Créneau d'une heure
+        end: new Date(selectedSlotTime.getTime() + 60 * 60 * 1000),
         title,
         description,
       }),
@@ -103,6 +102,13 @@ const Calendar = () => {
     const slotElements = [];
 
     for (let hour = 6; hour <= 20; hour++) {
+      // Ajout d'une cellule d'heure par ligne
+      slotElements.push(
+        <div key={`hour-${hour}`} className="hour-cell">
+          {hour}:00
+        </div>
+      );
+
       for (let day = 0; day < 7; day++) {
         const slotTime = new Date(currentDate);
         slotTime.setDate(slotTime.getDate() - slotTime.getDay() + day);
@@ -151,10 +157,13 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container">
-      <button onClick={() => navigateWeek(-1)}>Précédent</button>
-      <button onClick={() => navigateWeek(1)}>Suivant</button>
+      <button className="calandar-container-button" onClick={() => navigateWeek(-1)}>Précédent</button>
+      <button className="calandar-container-button" onClick={() => navigateWeek(1)}>Suivant</button>
       <div className="calendar">
-        <div className="days-row">{renderDays()}</div>
+        <div className="days-row">
+          <div className="hour-column-header"></div>
+          {renderDays()}
+        </div>
         <div className="slots-grid">{renderSlots()}</div>
       </div>
 
