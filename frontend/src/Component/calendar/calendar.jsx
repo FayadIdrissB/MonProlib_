@@ -56,13 +56,20 @@ const Calendar = () => {
     const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     const firstDayOfWeek = new Date(currentDate);
     firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+    const today = new Date(); // Récupération de la date actuelle
 
     return days.map((day, i) => {
       const dayDate = new Date(firstDayOfWeek);
       dayDate.setDate(firstDayOfWeek.getDate() + i);
 
+      // Vérifier si dayDate correspond à aujourd'hui
+      const isToday =
+        dayDate.getDate() === today.getDate() &&
+        dayDate.getMonth() === today.getMonth() &&
+        dayDate.getFullYear() === today.getFullYear();
+
       return (
-        <div key={i} className="day-header">
+        <div key={i} className={`day-header ${isToday ? "today" : ""}`}>
           {day}{" "}
           {dayDate.toLocaleDateString("fr-FR", {
             day: "numeric",
@@ -157,8 +164,18 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container">
-      <button className="calandar-container-button" onClick={() => navigateWeek(-1)}>Précédent</button>
-      <button className="calandar-container-button" onClick={() => navigateWeek(1)}>Suivant</button>
+      <button
+        className="calandar-container-button"
+        onClick={() => navigateWeek(-1)}
+      >
+        Précédent
+      </button>
+      <button
+        className="calandar-container-button"
+        onClick={() => navigateWeek(1)}
+      >
+        Suivant
+      </button>
       <div className="calendar">
         <div className="days-row">
           <div className="hour-column-header"></div>

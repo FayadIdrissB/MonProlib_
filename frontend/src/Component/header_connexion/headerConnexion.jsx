@@ -93,6 +93,7 @@ function HeaderConnexion() {
                 Mon Espace Pro
               </div>
               <div className="dropdown_item">Déposer Mon annonce</div>
+              <div className="dropdown_item">Définir Mes Heures</div>
               <div
                 className="dropdown_item"
                 onClick={() => {
@@ -100,9 +101,8 @@ function HeaderConnexion() {
                   navigate("/calendar_pro");
                 }}
               >
-                Définir Mes Heures
+                Mes Rendez-Vous
               </div>
-              <div className="dropdown_item">Mes Rendez-Vous</div>
             </>
           ) : null}
           <div className="dropdown_item">Paramètre</div>
