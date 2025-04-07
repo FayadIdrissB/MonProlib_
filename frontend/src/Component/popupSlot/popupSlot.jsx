@@ -4,6 +4,7 @@ import "./popupSlot.css";
 const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [activite, setActivite] = useState("");
 
   useEffect(() => {
     if (visible) {
@@ -13,6 +14,19 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
   }, [visible]);
 
   if (!visible) return null;
+
+  //remplacer par le fetch
+  const people = [
+    "Creola Katherine Johnson : mathématicienne",
+    "Mario José Molina-Pasquel Henríquez : chimiste",
+    "Mohammad Abdus Salam : physicien",
+    "Percy Lavon Julian : chimiste",
+    "Subrahmanyan Chandrasekhar : astrophysicien",
+  ];
+
+  const listItems = people.map((person) => (
+    <option value={person}>{person}</option>
+  ));
 
   return (
     <div className="popup-overlay">
@@ -29,6 +43,9 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+        <label>
+          Sélectionner une activité :<select>{listItems}</select>
+        </label>
         <div className="popup-actions">
           <button onClick={() => onSave(title, description)}>
             Enregistrer
