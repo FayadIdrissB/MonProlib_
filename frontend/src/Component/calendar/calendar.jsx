@@ -48,7 +48,6 @@ const Calendar = () => {
     const dateClicked = new Date(currentDate);
     dateClicked.setDate(dateClicked.getDate() - dateClicked.getDay() + day);
     dateClicked.setHours(hour, 0, 0, 0);
-
     openPopup(dateClicked);
   };
 
@@ -56,13 +55,12 @@ const Calendar = () => {
     const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     const firstDayOfWeek = new Date(currentDate);
     firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
-    const today = new Date(); // Récupération de la date actuelle
+    const today = new Date();
 
     return days.map((day, i) => {
       const dayDate = new Date(firstDayOfWeek);
       dayDate.setDate(firstDayOfWeek.getDate() + i);
 
-      // Vérifier si dayDate correspond à aujourd'hui
       const isToday =
         dayDate.getDate() === today.getDate() &&
         dayDate.getMonth() === today.getMonth() &&
@@ -90,7 +88,8 @@ const Calendar = () => {
     setPopupVisible(false);
   };
 
-  const saveSlot = async (title, description) => {
+  // Mise à jour de saveSlot pour récupérer l'activité sélectionnée depuis le Popup
+  const saveSlot = async (title, description, activite) => {
     await fetch("http://localhost:3000/api/slotsCalendar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -99,6 +98,7 @@ const Calendar = () => {
         end: new Date(selectedSlotTime.getTime() + 60 * 60 * 1000),
         title,
         description,
+        activite,
       }),
     });
     closePopup();
@@ -109,7 +109,6 @@ const Calendar = () => {
     const slotElements = [];
 
     for (let hour = 6; hour <= 20; hour++) {
-      // Ajout d'une cellule d'heure par ligne
       slotElements.push(
         <div key={`hour-${hour}`} className="hour-cell">
           {hour}:00
@@ -145,6 +144,7 @@ const Calendar = () => {
                 </span>
                 <span>{slot.title}</span>
                 <span>{slot.description}</span>
+                <span>{slot.activity}</span>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();

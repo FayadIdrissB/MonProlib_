@@ -1,8 +1,12 @@
 const express = require("express");
-const { createAnnonce } = require("../controllers/annonceController");
+const {
+  createAnnonce,
+  GetActivitys,
+} = require("../controllers/annonceController");
 
 const router = express.Router();
 
 router.post("/", createAnnonce);
+router.get("/", GetActivitys);
 
 module.exports = router;

@@ -4,28 +4,39 @@ import "./popupSlot.css";
 const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [activite, setActivite] = useState("");
+  const [activities, setActivities] = useState([]);
+  const [selectedActivite, setSelectedActivite] = useState("");
 
+  // Réinitialise les champs lorsque le popup devient visible
   useEffect(() => {
     if (visible) {
       setTitle("");
       setDescription("");
+      setSelectedActivite("");
     }
   }, [visible]);
 
+  // Récupère les activités uniquement lorsque le popup est visible
+  useEffect(() => {
+    if (visible) {
+      fetch("http://localhost:3000/api/annonces")
+        .then((response) => response.json())
+        .then((data) => {
+          setActivities(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching activities:", error);
+        });
+    }
+  }, [visible]);
+
+  // Ne pas conditionner l'exécution des hooks au retour du composant
   if (!visible) return null;
 
-  //remplacer par le fetch
-  const people = [
-    "Creola Katherine Johnson : mathématicienne",
-    "Mario José Molina-Pasquel Henríquez : chimiste",
-    "Mohammad Abdus Salam : physicien",
-    "Percy Lavon Julian : chimiste",
-    "Subrahmanyan Chandrasekhar : astrophysicien",
-  ];
-
-  const listItems = people.map((person) => (
-    <option value={person}>{person}</option>
+  const listItems = activities.map((item, index) => (
+    <option key={index} value={item.name}>
+      {item.name}
+    </option>
   ));
 
   return (
@@ -43,11 +54,18 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
-        <label>
-          Sélectionner une activité :<select>{listItems}</select>
-        </label>
+        <div className="selectActivity">
+          <label>Sélectionner une activité :</label>
+          <select
+            value={selectedActivite}
+            onChange={(e) => setSelectedActivite(e.target.value)}
+          >
+            <option value="">Sélectionnez une activité</option>
+            {listItems}
+          </select>
+        </div>
         <div className="popup-actions">
-          <button onClick={() => onSave(title, description)}>
+          <button onClick={() => onSave(title, description, selectedActivite)}>
             Enregistrer
           </button>
           <button onClick={onClose}>Annuler</button>
