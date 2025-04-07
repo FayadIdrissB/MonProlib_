@@ -92,7 +92,7 @@ button {
 }
 
 .day-header.today {
-  background-color: #2196f3; /* Exemple : couleur de fond différente pour le jour actuel */
+  background-color: #2440a9; /* Exemple : couleur de fond différente pour le jour actuel */
   color: #000; /* Vous pouvez ajuster la couleur du texte si nécessaire */
   border-radius: 4px; /* Optionnel : pour un effet arrondi */
   padding: 5px; /* Optionnel : pour donner de l'espace */
