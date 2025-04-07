@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 const placesRoutes = require("./routes/placesRoutes");
 const slotRoutes = require("./routes/slotRoutes");
+const annonceRoutes = require("./routes/annonceRoutes");
 
 // Chargement des variables d'environnement
 require("dotenv").config();
@@ -39,6 +40,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/places", placesRoutes);
 app.use("/api/slotsCalendar", slotRoutes);
+app.use("/api/annonces", annonceRoutes);
 
 // Gestion des routes non trouvées
 app.use((req, res) => {
