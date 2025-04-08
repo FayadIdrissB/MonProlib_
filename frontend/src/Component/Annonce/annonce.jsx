@@ -7,52 +7,54 @@ const Annonce = () => {
   const [adresCompany, setAdresCompany] = useState("");
 
   // Horaires pour chaque jour
-
   // Lundi
   const [lundiStart, setLundiStart] = useState("");
   const [lundiEnd, setLundiEnd] = useState("");
   const [lundiClosed, setLundiClosed] = useState(false);
-
   // Mardi
   const [mardiStart, setMardiStart] = useState("");
   const [mardiEnd, setMardiEnd] = useState("");
   const [mardiClosed, setMardiClosed] = useState(false);
-
   // Mercredi
   const [mercrediStart, setMercrediStart] = useState("");
   const [mercrediEnd, setMercrediEnd] = useState("");
   const [mercrediClosed, setMercrediClosed] = useState(false);
-
   // Jeudi
   const [jeudiStart, setJeudiStart] = useState("");
   const [jeudiEnd, setJeudiEnd] = useState("");
   const [jeudiClosed, setJeudiClosed] = useState(false);
-
   // Vendredi
   const [vendrediStart, setVendrediStart] = useState("");
   const [vendrediEnd, setVendrediEnd] = useState("");
   const [vendrediClosed, setVendrediClosed] = useState(false);
-
   // Samedi
   const [samediStart, setSamediStart] = useState("");
   const [samediEnd, setSamediEnd] = useState("");
   const [samediClosed, setSamediClosed] = useState(false);
-
   // Dimanche
   const [dimancheStart, setDimancheStart] = useState("");
   const [dimancheEnd, setDimancheEnd] = useState("");
   const [dimancheClosed, setDimancheClosed] = useState(false);
 
-  // États pour le rendu conditionnel des horaires et des activités
+  // États pour le rendu conditionnel
   const [displayHoraire, setDisplayHoraire] = useState(false);
-  const [displayActivity, setDisplayActivity] = useState(false);
+  const [displayAddActivity, setDisplayAddActivity] = useState(false);
 
-  // Champs pour l'activité proposée
-  const [nameActivity, setNameActivity] = useState("");
-  const [descriptionActivity, setDescriptionActivity] = useState("");
-  const [durationActivity, setDurationActivity] = useState("");
+  // États pour le formulaire d'ajout d'une nouvelle activité
+  const [newActivityName, setNewActivityName] = useState("");
+  const [newActivityDescription, setNewActivityDescription] = useState("");
+  const [newActivityDuration, setNewActivityDuration] = useState("");
 
-  // Génération des options pour les horaires de 06:00 à 22:00
+  // État pour stocker toutes les activités (nouvelles)
+  const [activitiesList, setActivitiesList] = useState([]);
+
+  // États pour gérer l'édition d'une activité existante
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editingName, setEditingName] = useState("");
+  const [editingDescription, setEditingDescription] = useState("");
+  const [editingDuration, setEditingDuration] = useState("");
+
+  // Génération des options pour les horaires (de 06:00 à 22:00)
   const hourOptions = [];
   for (let hour = 6; hour <= 22; hour++) {
     const formattedHour = hour.toString().padStart(2, "0") + ":00";
@@ -67,12 +69,9 @@ const Annonce = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Envoi des données en respectant le modèle Mongoose
       const response = await fetch("http://localhost:3000/api/annonces", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nameCompany,
           adresCompany,
@@ -101,17 +100,12 @@ const Annonce = () => {
               closed: dimancheClosed,
             },
           },
-          activities: [
-            {
-              name: nameActivity,
-              description: descriptionActivity,
-              duration: durationActivity,
-            },
-          ],
+          activities: activitiesList, // Envoi de toutes les activités ajoutées
         }),
       });
       if (response.ok) {
         console.log("Envoi réussi");
+        console.log(response);
       } else {
         console.log("Envoi échoué");
       }
@@ -120,25 +114,95 @@ const Annonce = () => {
     }
   };
 
-  // Fonctions pour passer en mode aperçu des horaires et des activités
+  // Enregistrement d'une nouvelle activité via le formulaire "Ajouter une activité"
+  const handleEnregistrerNouvelleActivite = (event) => {
+    event.preventDefault();
+    const newActivity = {
+      name: newActivityName,
+      description: newActivityDescription,
+      duration: newActivityDuration,
+    };
+    setActivitiesList([...activitiesList, newActivity]);
+    // Réinitialiser les champs et masquer le formulaire
+    setNewActivityName("");
+    setNewActivityDescription("");
+    setNewActivityDuration("");
+    setDisplayAddActivity(false);
+  };
+
+  // Lancer la modification d'une activité existante
+  const handleStartEditing = (index) => {
+    setEditingIndex(index);
+    setEditingName(activitiesList[index].name);
+    setEditingDescription(activitiesList[index].description);
+    setEditingDuration(activitiesList[index].duration);
+  };
+
+  // Sauvegarder les modifications apportées à une activité
+  const handleSaveEditing = (index) => {
+    const updatedActivities = [...activitiesList];
+    updatedActivities[index] = {
+      name: editingName,
+      description: editingDescription,
+      duration: editingDuration,
+    };
+    setActivitiesList(updatedActivities);
+    setEditingIndex(null);
+    setEditingName("");
+    setEditingDescription("");
+    setEditingDuration("");
+  };
+
+  // Modification et enregistrement des horaires
+  const handleModifierHoraires = () => {
+    setDisplayHoraire(false);
+  };
+
   const handleEnregistrerHoraires = (event) => {
     event.preventDefault();
     setDisplayHoraire(true);
   };
 
-  const handleEnregistrerActivite = (event) => {
-    event.preventDefault();
-    setDisplayActivity(true);
-  };
-
-  // Nouveaux gestionnaires pour revenir en mode modification
-  const handleModifierHoraires = () => {
-    setDisplayHoraire(false);
-  };
-
-  const handleModifierActivite = () => {
-    setDisplayActivity(false);
-  };
+  // Formulaire pour ajouter une nouvelle activité
+  const newAddActivityForm = () => (
+    <div className="activityForm">
+      <div>
+        <label htmlFor="newActivityName">Nom de l'activité :</label>
+        <input
+          type="text"
+          name="newActivityName"
+          value={newActivityName}
+          placeholder="Nom de l'activité"
+          onChange={(e) => setNewActivityName(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="newActivityDescription">
+          Description de l'activité :
+        </label>
+        <input
+          type="text"
+          name="newActivityDescription"
+          value={newActivityDescription}
+          placeholder="Description de l'activité"
+          onChange={(e) => setNewActivityDescription(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="newActivityDuration">Durée de l'activité :</label>
+        <input
+          type="text"
+          name="newActivityDuration"
+          value={newActivityDuration}
+          placeholder="Durée de l'activité"
+          onChange={(e) => setNewActivityDuration(e.target.value)}
+        />
+      </div>
+      <button type="button" onClick={handleEnregistrerNouvelleActivite}>
+        Enregistrer activité
+      </button>
+    </div>
+  );
 
   // Rendu conditionnel pour les horaires
   const renderHoraires = () => (
@@ -169,20 +233,9 @@ const Annonce = () => {
         Dimanche : {dimancheStart} - {dimancheEnd} -{" "}
         {dimancheClosed ? "Fermé" : "Ouvert"}
       </p>
-      {/* Bouton pour modifier les horaires */}
-      <button onClick={handleModifierHoraires}>Modifier horaires</button>
-    </div>
-  );
-
-  // Rendu conditionnel pour l'activité
-  const renderActivity = () => (
-    <div className="activitesAffichage">
-      <h3>Activité proposée :</h3>
-      <p>
-        {nameActivity} - {descriptionActivity} - {durationActivity}
-      </p>
-      {/* Bouton pour modifier l'activité */}
-      <button onClick={handleModifierActivite}>Modifier activité</button>
+      <button type="button" onClick={handleModifierHoraires}>
+        Modifier horaires
+      </button>
     </div>
   );
 
@@ -267,7 +320,6 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-
             {/* Mardi */}
             <div className="dayRow">
               <h3>Mardi</h3>
@@ -315,7 +367,6 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-
             {/* Mercredi */}
             <div className="dayRow">
               <h3>Mercredi</h3>
@@ -363,7 +414,6 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-
             {/* Jeudi */}
             <div className="dayRow">
               <h3>Jeudi</h3>
@@ -411,7 +461,6 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-
             {/* Vendredi */}
             <div className="dayRow">
               <h3>Vendredi</h3>
@@ -459,7 +508,6 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-
             {/* Samedi */}
             <div className="dayRow">
               <h3>Samedi</h3>
@@ -507,7 +555,6 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-
             {/* Dimanche */}
             <div className="dayRow">
               <h3>Dimanche</h3>
@@ -555,7 +602,7 @@ const Annonce = () => {
                 </label>
               </div>
             </div>
-            <button onClick={handleEnregistrerHoraires}>
+            <button type="button" onClick={handleEnregistrerHoraires}>
               Enregistrer horaires de travail
             </button>
           </div>
@@ -565,49 +612,61 @@ const Annonce = () => {
       </section>
 
       <section>
-        <h2>Vos activités proposées</h2>
-        {!displayActivity ? (
-          <div className="activityForm">
-            <div>
-              <label htmlFor="nameActivity">Nom de l'activité :</label>
-              <input
-                type="text"
-                name="nameActivity"
-                value={nameActivity}
-                placeholder="Nom de l'activité"
-                onChange={(e) => setNameActivity(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="descriptionActivity">
-                Description de l'activité :
-              </label>
-              <input
-                type="text"
-                name="descriptionActivity"
-                value={descriptionActivity}
-                placeholder="Description de l'activité"
-                onChange={(e) => setDescriptionActivity(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="durationActivity">Durée de l'activité :</label>
-              <input
-                type="text"
-                name="durationActivity"
-                value={durationActivity}
-                placeholder="Durée de l'activité"
-                onChange={(e) => setDurationActivity(e.target.value)}
-              />
-            </div>
-            <button onClick={handleEnregistrerActivite}>
-              Enregistrer activité
-            </button>
-          </div>
-        ) : (
-          renderActivity()
-        )}
+        <h2>Ajouter une activité</h2>
+        <button type="button" onClick={() => setDisplayAddActivity(true)}>
+          Ajouter une activité
+        </button>
+        {displayAddActivity && newAddActivityForm()}
       </section>
+
+      {/* Affichage dynamique de toutes les activités enregistrées avec possibilité de modification */}
+      {activitiesList.length > 0 && (
+        <section className="allActivities">
+          <h2>Toutes les activités enregistrées</h2>
+          {activitiesList.map((activity, index) => (
+            <div key={index} className="activityItem">
+              {editingIndex === index ? (
+                <div>
+                  <input
+                    type="text"
+                    value={editingName}
+                    onChange={(e) => setEditingName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    value={editingDescription}
+                    onChange={(e) => setEditingDescription(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    value={editingDuration}
+                    onChange={(e) => setEditingDuration(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleSaveEditing(index)}
+                  >
+                    Enregistrer
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <p>
+                    {activity.name} - {activity.description} -{" "}
+                    {activity.duration}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleStartEditing(index)}
+                  >
+                    Modifier
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
 
       <button type="submit" className="sendDataForm">
         Poster mon annonce

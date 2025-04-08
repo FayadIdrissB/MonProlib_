@@ -17,3 +17,8 @@ exports.GetActivitys = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.GetAnnonces = async (req, res) => {
+  const annonces = await Annonce.find();
+  res.status(201).json(annonces);
+};
