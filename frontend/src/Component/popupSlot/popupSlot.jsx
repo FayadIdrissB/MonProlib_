@@ -19,7 +19,7 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
   // Récupère les activités uniquement lorsque le popup est visible
   useEffect(() => {
     if (visible) {
-      fetch("http://localhost:3000/api/annonces")
+      fetch("http://localhost:3000/api/annonces/activitys")
         .then((response) => response.json())
         .then((data) => {
           setActivities(data);
