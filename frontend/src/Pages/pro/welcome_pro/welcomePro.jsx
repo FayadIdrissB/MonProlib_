@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 //import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import HeaderPro from "../../../Component/header_connexion/headerConnexion";
-import Footer from "../../../Component/Footer/footer.jsx";
+import Footer from "../../../Component/footer/footer";
 import Logo from "../../../image/logoP.png";
 
 // Importation des images locales

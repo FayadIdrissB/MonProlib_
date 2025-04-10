@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Home from "./Pages/Home/home.jsx";
+import Home from "./Pages/home/home";
 import HomePro from "./Pages/pro/home_pro/homePro.jsx";
 import RegisterPro from "./Pages/pro/register_pro/registerPro";
 import RegisterUser from "./Pages/user/register_user/registerUser.jsx";
