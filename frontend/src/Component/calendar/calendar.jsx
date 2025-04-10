@@ -10,6 +10,7 @@ const Calendar = () => {
   const [selectedSlotTime, setSelectedSlotTime] = useState(null);
 
   useEffect(() => {
+    
     fetchSlots();
   }, [currentDate]);
 
@@ -44,11 +45,11 @@ const Calendar = () => {
     setCurrentDate(newDate);
   };
 
-  const handleSelection = (day, hour) => {
+  // Mise à jour de handleSelection pour gérer heures et minutes
+  const handleSelection = (day, hour, minute) => {
     const dateClicked = new Date(currentDate);
     dateClicked.setDate(dateClicked.getDate() - dateClicked.getDay() + day);
-    dateClicked.setHours(hour, 0, 0, 0);
-
+    dateClicked.setHours(hour, minute, 0, 0);
     openPopup(dateClicked);
   };
 
@@ -56,13 +57,19 @@ const Calendar = () => {
     const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     const firstDayOfWeek = new Date(currentDate);
     firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+    const today = new Date();
 
     return days.map((day, i) => {
       const dayDate = new Date(firstDayOfWeek);
       dayDate.setDate(firstDayOfWeek.getDate() + i);
 
+      const isToday =
+        dayDate.getDate() === today.getDate() &&
+        dayDate.getMonth() === today.getMonth() &&
+        dayDate.getFullYear() === today.getFullYear();
+
       return (
-        <div key={i} className="day-header">
+        <div key={i} className={`day-header ${isToday ? "today" : ""}`}>
           {day}{" "}
           {dayDate.toLocaleDateString("fr-FR", {
             day: "numeric",
@@ -83,7 +90,8 @@ const Calendar = () => {
     setPopupVisible(false);
   };
 
-  const saveSlot = async (title, description) => {
+  // Mise à jour de saveSlot pour récupérer l'activité sélectionnée depuis le Popup
+  const saveSlot = async (title, description, activite) => {
     await fetch("http://localhost:3000/api/slotsCalendar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -91,7 +99,7 @@ const Calendar = () => {
         start: selectedSlotTime,
         end: new Date(selectedSlotTime.getTime() + 60 * 60 * 1000),
         title,
-        description,
+        description
       }),
     });
     closePopup();
@@ -102,63 +110,75 @@ const Calendar = () => {
     const slotElements = [];
 
     for (let hour = 6; hour <= 20; hour++) {
-      // Ajout d'une cellule d'heure par ligne
-      slotElements.push(
-        <div key={`hour-${hour}`} className="hour-cell">
-          {hour}:00
-        </div>
-      );
-
-      for (let day = 0; day < 7; day++) {
-        const slotTime = new Date(currentDate);
-        slotTime.setDate(slotTime.getDate() - slotTime.getDay() + day);
-        slotTime.setHours(hour, 0, 0, 0);
-
-        const slot = slots.find(
-          (s) => new Date(s.start).getTime() === slotTime.getTime()
-        );
-        const isSelected =
-          selection.start && slotTime.getTime() === selection.start.getTime();
-
+      for (let minute = 0; minute < 60; minute += 30) {
         slotElements.push(
-          <div
-            key={`${day}-${hour}`}
-            className={`slot ${slot ? "booked" : ""} ${
-              isSelected ? "selected" : ""
-            }`}
-            onClick={() => handleSelection(day, hour)}
-          >
-            {slot && (
-              <div className="slot-info">
-                <span>
-                  {new Date(slot.start).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
-                <span>{slot.title}</span>
-                <span>{slot.description}</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteSlot(slot._id);
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            )}
+          <div key={`hour-${hour}-${minute}`} className="hour-cell">
+            {hour}h{minute === 0 ? "00" : "30"}
           </div>
         );
+
+        for (let day = 0; day < 7; day++) {
+          const slotTime = new Date(currentDate);
+          slotTime.setDate(slotTime.getDate() - slotTime.getDay() + day);
+          slotTime.setHours(hour, minute, 0, 0);
+
+          const slot = slots.find(
+            (s) => new Date(s.start).getTime() === slotTime.getTime()
+          );
+          const isSelected =
+            selection.start && slotTime.getTime() === selection.start.getTime();
+
+          slotElements.push(
+            <div
+              key={`${day}-${hour}-${minute}`}
+              className={`slot ${slot ? "booked" : ""} ${
+                isSelected ? "selected" : ""
+              }`}
+              onClick={() => handleSelection(day, hour, minute)}
+            >
+              {slot && (
+                <div className="slot-info">
+                  <span>
+                    {new Date(slot.start).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                  <span>{slot.title}</span>
+                  <span>{slot.description}</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteSlot(slot._id);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        }
       }
     }
+
     return slotElements;
   };
 
   return (
     <div className="calendar-container">
-      <button className="calandar-container-button" onClick={() => navigateWeek(-1)}>Précédent</button>
-      <button className="calandar-container-button" onClick={() => navigateWeek(1)}>Suivant</button>
+      <button
+        className="calandar-container-button"
+        onClick={() => navigateWeek(-1)}
+      >
+        Précédent
+      </button>
+      <button
+        className="calandar-container-button"
+        onClick={() => navigateWeek(1)}
+      >
+        Suivant
+      </button>
       <div className="calendar">
         <div className="days-row">
           <div className="hour-column-header"></div>

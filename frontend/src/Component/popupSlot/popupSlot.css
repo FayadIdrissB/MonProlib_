@@ -46,3 +46,7 @@
 .popup-actions button {
   padding: 6px 12px;
 }
+
+.selectActivity {
+  display: contents;
+}

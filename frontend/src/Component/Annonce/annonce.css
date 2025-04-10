@@ -1,0 +1,43 @@
+.mainForm {
+  background-color: white;
+  color: rgb(0, 0, 0);
+  display: block;
+  align-content: flex-start;
+  padding: 30px;
+}
+
+.companyDetail {
+  display: block;
+  justify-content: center;
+}
+.horairesAffichage {
+  color: black;
+}
+
+h1 {
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+button {
+  background-color: green;
+  color: white;
+}
+
+input {
+  border: 1px solid black;
+}
+
+.inputNameCompany {
+  width: 90%;
+}
+.inputAdresCompany {
+  width: 90%;
+}
+
+.sendDataForm {
+  width: 30%;
+}
