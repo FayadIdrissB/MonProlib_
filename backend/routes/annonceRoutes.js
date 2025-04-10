@@ -10,6 +10,5 @@ const router = express.Router();
 router.post("/", createAnnonce);
 
 router.get("/", GetAnnonces);
-router.get("/activitys", GetActivitys);
 
 module.exports = router;

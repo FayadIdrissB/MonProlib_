@@ -10,6 +10,7 @@ const Calendar = () => {
   const [selectedSlotTime, setSelectedSlotTime] = useState(null);
 
   useEffect(() => {
+    
     fetchSlots();
   }, [currentDate]);
 
@@ -98,8 +99,7 @@ const Calendar = () => {
         start: selectedSlotTime,
         end: new Date(selectedSlotTime.getTime() + 60 * 60 * 1000),
         title,
-        description,
-        activite,
+        description
       }),
     });
     closePopup();
@@ -146,7 +146,6 @@ const Calendar = () => {
                   </span>
                   <span>{slot.title}</span>
                   <span>{slot.description}</span>
-                  <span>{slot.activity}</span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
