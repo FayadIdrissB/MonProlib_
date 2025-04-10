@@ -5,6 +5,7 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  // Réinitialise les champs lorsque le popup devient visible
   useEffect(() => {
     if (visible) {
       setTitle("");
@@ -12,6 +13,7 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
     }
   }, [visible]);
 
+  // Ne pas conditionner l'exécution des hooks au retour du composant
   if (!visible) return null;
 
   return (
@@ -29,6 +31,7 @@ const PopupSlot = ({ visible, onClose, onSave, slotTime }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
+
         <div className="popup-actions">
           <button onClick={() => onSave(title, description)}>
             Enregistrer
