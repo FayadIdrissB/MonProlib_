@@ -1,5 +1,5 @@
 .mainForm {
-  background-color: white;
+  background-color: #2196f3;
   color: rgb(0, 0, 0);
   display: block;
   align-content: flex-start;
@@ -11,20 +11,21 @@
   justify-content: center;
 }
 .horairesAffichage {
-  color: black;
+  color: white;
 }
 
 h1 {
-  color: black;
+  color: white;
 }
 
 p {
-  color: black;
+  color: white;
 }
 
 button {
-  background-color: green;
+  background-color: #2440a9;
   color: white;
+  border-radius: 10px;
 }
 
 input {
@@ -33,6 +34,7 @@ input {
 
 .inputNameCompany {
   width: 90%;
+  text-decoration: none;
 }
 .inputAdresCompany {
   width: 90%;
@@ -40,4 +42,19 @@ input {
 
 .sendDataForm {
   width: 30%;
+}
+
+.titleAnnonce
+{
+  color: white;
+}
+
+.nameCompany
+{
+  color: white;
+}
+
+.titleEntreprise
+{
+  color: black;
 }

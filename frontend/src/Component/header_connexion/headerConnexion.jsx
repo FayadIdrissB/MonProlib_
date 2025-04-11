@@ -87,19 +87,10 @@ function HeaderConnexion() {
                 className="dropdown_item"
                 onClick={() => {
                   setMenuOpen(false);
-                  navigate("/mon-espace-pro");
-                }}
-              >
-                Mon Espace Pro
-              </div>
-              <div
-                className="dropdown_item"
-                onClick={() => {
-                  setMenuOpen(false);
                   navigate("/annonce_pro");
                 }}
               >
-                Déposer Mon annonce
+               Mes Annonces
               </div>
               <div
                 className="dropdown_item"
