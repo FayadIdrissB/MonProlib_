@@ -208,7 +208,7 @@ const Annonce = () => {
   const renderHoraires = () => (
     <div className="horairesAffichage">
       <h3>Horaires de travail :</h3>
-      <p>
+      <p className="dayinput">
         Lundi : {lundiStart} - {lundiEnd} - {lundiClosed ? "Fermé" : "Ouvert"}
       </p>
       <p>
@@ -244,9 +244,9 @@ const Annonce = () => {
       <h1>Calendrier de Rendez-vous</h1>
 
       <section className="companyDetails">
-        <h2 className="postAnnonce">Poster mon annonce (entreprise)</h2>
+        <h2 className="titleAnnonce">Poster mon annonce (entreprise)</h2>
         <div>
-          <label htmlFor="nameCompany">Nom de l'entreprise :</label>
+          <label htmlFor="nameCompany" className="titleEntreprise">Nom de l'entreprise :</label>
           <input
             className="inputNameCompany"
             type="text"
@@ -257,7 +257,7 @@ const Annonce = () => {
           />
         </div>
         <div>
-          <label htmlFor="adresCompany">Adresse de l'entreprise :</label>
+          <label htmlFor="titleAnnonce" className="titleEntreprise">Adresse de l'entreprise :</label>
           <input
             className="inputAdresCompany"
             type="text"
@@ -270,7 +270,7 @@ const Annonce = () => {
       </section>
 
       <section>
-        <h2>Vos horaires de travail</h2>
+        <h2 className="titleAnnonce">Vos horaires de travail</h2>
         {!displayHoraire ? (
           <div className="horairesForm">
             {/* Lundi */}
@@ -612,7 +612,7 @@ const Annonce = () => {
       </section>
 
       <section>
-        <h2>Ajouter une activité</h2>
+        <h2 className="titleAnnonce">Ajouter une activité</h2>
         <button type="button" onClick={() => setDisplayAddActivity(true)}>
           Ajouter une activité
         </button>
